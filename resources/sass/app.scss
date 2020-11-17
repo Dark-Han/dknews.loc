@@ -1,0 +1,89 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+#adminPanel {
+  button {
+    &:focus {
+      outline: none !important;
+    }
+  }
+
+  .vue2-editor {
+    .ql-editor {
+      min-height: 65vh !important;
+    }
+  }
+
+  .fullScreenModalContainer {
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+  }
+
+  .v-navigation-drawer__content {
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .searchInput {
+    margin-top: 10px;
+  }
+
+  .deleteDialogHead {
+    font-size: 18.5px !important;
+  }
+
+  .v-label--active {
+    color: #1976d2 !important;
+    caret-color: #1976d2 !important;
+  }
+
+  .v-list-item__title,
+  .v-list-item__content {
+    font-size: 15px !important;
+  }
+
+  .v-list-group__items {
+    .v-list-item {
+      padding-left: 27px !important;
+    }
+  }
+
+  .productH5 {
+    color: #1976d2 !important;
+  }
+
+  .v-card {
+    .v-card__text {
+      padding-bottom: 0px;
+    }
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

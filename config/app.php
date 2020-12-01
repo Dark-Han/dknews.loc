@@ -174,6 +174,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        //My providers
+        Intervention\Image\ImageServiceProvider::class,
+        App\Providers\DependencyInjectionServiceProvider::class,
 
     ],
 
@@ -227,6 +231,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        //My aliases
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

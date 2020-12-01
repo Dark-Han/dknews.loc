@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\Category\CreateCategoryRequest;
+use App\Http\Requests\V1\Category\DeleteCategoryRequest;
+use App\Http\Requests\V1\Category\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Services\CategoryService;
+use App\Http\Resources\Api\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -15,44 +20,44 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data['categories']=Category::orderBy('id','desc')->get();
-        return response()->json($data);
+        $categories = Category::orderBy('id', 'desc')->get();
+        return CategoryResource::collection($categories);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request, CategoryService $categoryService)
     {
-        $data['category']=Category::create($request->all());
-        return response()->json($data);
+        $category = $categoryService->create($request->validated());
+        return new CategoryResource($category);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id, CategoryService $categoryService)
     {
-        Category::where('id',$id)->update($request->all());
-        return response()->json();
+        $categoryService->update($id, $request->validated());
+        return new CategoryResource(Category::find($id));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, DeleteCategoryRequest $request, CategoryService $categoryService)
     {
-        Category::destroy($id);
+        $categoryService->delete($id, $request->validated());
         return response()->json();
     }
 }

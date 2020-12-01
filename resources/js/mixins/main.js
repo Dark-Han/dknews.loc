@@ -1,6 +1,9 @@
 export default {
     data: () => ({
       data: [],
+      cover:null,
+      coverUrl:null,
+      isSuccess:false,
       valid: true,
       skeleton: true,
       editedIndex: -1,
@@ -16,13 +19,44 @@ export default {
     }),
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? "Добавление данных" : "Изменение данных";
+        if(this.editedIndex===-1){
+          this.isSuccess=true;
+          return "Добавление данных";
+        }else{
+          this.isSuccess=false;
+          return "Изменение данных";
+        }
       },
     },
     watch: {
       dialog(val) {
         val || this.close();
       },
+      cover(newVal){
+            if(typeof(newVal)==='string' && newVal.indexOf('http')!==-1){
+                this.cover = null;
+                this.$nextTick(() => {
+                    this.coverUrl=newVal;
+                });
+            }else if(newVal instanceof File){
+                this.coverUrl= URL.createObjectURL(newVal)
+                if(this.editedIndex>-1){
+                    this.editedItem.updatedCover=newVal;
+                }else{
+                    this.editedItem.cover=newVal;
+                }
+            }else if(newVal===undefined){
+                if(this.editedIndex>-1){
+                  this.coverUrl=this.editedItem.cover;
+                  delete this.editedItem.updatedCover;
+                }else{
+                  this.coverUrl=null;
+                }
+            }
+      },
+      'editedItem.cover':function(val){
+        this.cover=val;
+      }
     },
     methods: {
       requiredText(name) {
@@ -35,7 +69,12 @@ export default {
         ];
       },
       requiredImage(name) {
-        return [(v) => !!v || "'" + name + "' не загружена!"];
+        return [(v) => !!v || name + " не загружена!"];
+      },
+      requiredCover(name) {
+        if(this.editedIndex===-1){
+          return this.requiredImage(name);
+        }
       },
       requiredList(name) {
         return [(v) => !!v || name + " не выбрана!"];
@@ -59,6 +98,8 @@ export default {
       close() {
         this.dialog = false;
         this.deleteDialog = false;
+        this.coverUrl=null;
+        this.cover=null;
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem);
           this.editedIndex = -1;
@@ -78,7 +119,6 @@ export default {
             return options[key].name;
           }
         }
-      },
+      }
     },
   };
-  

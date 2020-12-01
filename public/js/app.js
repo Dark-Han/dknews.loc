@@ -2114,6 +2114,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_mixins_main_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2128,16 +2159,35 @@ __webpack_require__.r(__webpack_exports__);
         value: "actions",
         sortable: false
       }],
+      coverUrl: '',
       editedItem: {
-        name: ""
+        name: "",
+        cover: null,
+        serial_number_web: 0,
+        serial_number_mob: 0
       },
       defaultItem: {
-        name: ""
+        name: "",
+        cover: null,
+        serial_number_web: 0,
+        serial_number_mob: 0
       }
     };
   },
   created: function created() {
     this.index();
+  },
+  watch: {
+    'editedItem.serial_number_web': function editedItemSerial_number_web(val) {
+      if (Number(val) < 0) {
+        this.editedItem.serial_number_web = 0;
+      }
+    },
+    'editedItem.serial_number_mob': function editedItemSerial_number_mob(val) {
+      if (Number(val) < 0) {
+        this.editedItem.serial_number_mob = 0;
+      }
+    }
   },
   methods: {
     index: function index() {
@@ -2145,7 +2195,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/v1/categories").then(function (response) {
         var res = response.data;
-        _this.data = res.categories;
+        _this.data = res.data;
         _this.skeleton = false;
       })["catch"](function (error) {});
     },
@@ -2155,10 +2205,13 @@ __webpack_require__.r(__webpack_exports__);
       var validate = this.$refs.form.validate();
 
       if (validate) {
-        axios.post("/api/v1/categories", this.editedItem).then(function (response) {
-          var res = response.data;
-
-          _this2.data.unshift(res.category);
+        var formData = this.getFormDataFrom(this.editedItem);
+        axios.post('/api/v1/categories', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (res) {
+          _this2.data.unshift(res.data.data);
 
           _this2.close();
         })["catch"](function (error) {
@@ -2166,21 +2219,41 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    getFormDataFrom: function getFormDataFrom(data) {
+      var formData = new FormData();
+
+      for (var i in data) {
+        formData.append(i, data[i]);
+      }
+
+      return formData;
+    },
     update: function update() {
       var _this3 = this;
 
-      axios.put("/api/v1/categories/" + this.editedItem.id, this.editedItem).then(function (response) {
-        Object.assign(_this3.data[_this3.editedIndex], _this3.editedItem);
+      var validate = this.$refs.form.validate();
 
-        _this3.close();
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      if (validate) {
+        var formData = this.getFormDataFrom(this.editedItem);
+        axios.post("/api/v1/categories/" + this.editedItem.id + "?_method=PUT", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (res) {
+          Object.assign(_this3.data[_this3.editedIndex], res.data.data);
+
+          _this3.close();
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     deleteItem: function deleteItem() {
       var _this4 = this;
 
-      axios["delete"]("/api/v1/categories/" + this.editedItem.id).then(function (response) {
+      axios.post("/api/v1/categories/" + this.editedItem.id + "?_method=DELETE", {
+        cover: this.editedItem.cover
+      }).then(function (res) {
         _this4.data.splice(_this4.editedIndex, 1);
 
         _this4.showSnack("success", "Данные успешно удалены !");
@@ -2227,6 +2300,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -2235,6 +2311,276 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/NewsComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/NewsComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_main_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/main.js */ "./resources/js/mixins/main.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_main_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  data: function data() {
+    return {
+      headers: [{
+        text: "Название",
+        value: "name",
+        sortable: false
+      }, {
+        text: "Действия",
+        value: "actions",
+        sortable: false
+      }],
+      coverUrl: '',
+      editedItem: {
+        name: "",
+        cover: null,
+        serial_number_web: 0,
+        serial_number_mob: 0
+      },
+      defaultItem: {
+        name: "",
+        cover: null,
+        serial_number_web: 0,
+        serial_number_mob: 0
+      }
+    };
+  },
+  created: function created() {
+    this.index();
+  },
+  watch: {
+    'editedItem.serial_number_web': function editedItemSerial_number_web(val) {
+      if (Number(val) < 0) {
+        this.editedItem.serial_number_web = 0;
+      }
+    },
+    'editedItem.serial_number_mob': function editedItemSerial_number_mob(val) {
+      if (Number(val) < 0) {
+        this.editedItem.serial_number_mob = 0;
+      }
+    },
+    'editedItem.cover': function editedItemCover(val) {
+      this.coverUrl = URL.createObjectURL(this.editedItem.cover);
+    }
+  },
+  methods: {
+    index: function index() {
+      var _this = this;
+
+      axios.get("/api/v1/categories").then(function (response) {
+        var res = response.data;
+        _this.data = res.categories;
+        _this.skeleton = false;
+      })["catch"](function (error) {});
+    },
+    store: function store() {
+      var _this2 = this;
+
+      var validate = this.$refs.form.validate();
+
+      if (validate) {
+        var formData = this.getFormDataFrom(this.editedItem);
+        axios.post('/api/v1/categories', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (response) {
+          var res = response.data;
+
+          _this2.data.unshift(res.category);
+
+          _this2.close();
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    getFormDataFrom: function getFormDataFrom(data) {
+      var formData = new FormData();
+
+      for (var i in data) {
+        formData.append(i, data[i]);
+      }
+
+      return formData;
+    },
+    update: function update() {
+      var _this3 = this;
+
+      axios.put("/api/v1/categories/" + this.editedItem.id, this.editedItem).then(function (response) {
+        Object.assign(_this3.data[_this3.editedIndex], _this3.editedItem);
+
+        _this3.close();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    deleteItem: function deleteItem() {
+      var _this4 = this;
+
+      axios["delete"]("/api/v1/categories/" + this.editedItem.id).then(function (response) {
+        _this4.data.splice(_this4.editedIndex, 1);
+
+        _this4.showSnack("success", "Данные успешно удалены !");
+
+        _this4.close();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -38543,7 +38889,623 @@ var render = function() {
                     _c(
                       "v-dialog",
                       {
-                        attrs: { "max-width": "350px" },
+                        attrs: { "max-width": "550px" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "activator",
+                            fn: function(ref) {
+                              var on = ref.on
+                              return [
+                                _c(
+                                  "v-row",
+                                  [
+                                    _c(
+                                      "v-col",
+                                      { attrs: { cols: "8" } },
+                                      [
+                                        _c(
+                                          "v-btn",
+                                          _vm._g(
+                                            {
+                                              staticClass: "mb-2",
+                                              attrs: {
+                                                color: "success",
+                                                dark: ""
+                                              }
+                                            },
+                                            on
+                                          ),
+                                          [
+                                            _vm._v(
+                                              "Добавить\n                                "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-col",
+                                      { attrs: { cols: "4" } },
+                                      [
+                                        _c("v-text-field", {
+                                          staticClass: "searchInput",
+                                          attrs: {
+                                            "append-icon": "mdi-magnify",
+                                            label: "Поиск",
+                                            "single-line": "",
+                                            "hide-details": ""
+                                          },
+                                          model: {
+                                            value: _vm.search,
+                                            callback: function($$v) {
+                                              _vm.search = $$v
+                                            },
+                                            expression: "search"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.dialog,
+                          callback: function($$v) {
+                            _vm.dialog = $$v
+                          },
+                          expression: "dialog"
+                        }
+                      },
+                      [
+                        _vm._v(" "),
+                        _c(
+                          "v-card",
+                          [
+                            _c(
+                              "v-card-title",
+                              {
+                                staticClass: "headline",
+                                class: [_vm.isSuccess ? "success" : "warning"]
+                              },
+                              [
+                                _c(
+                                  "span",
+                                  { staticStyle: { color: "white" } },
+                                  [_vm._v(_vm._s(_vm.formTitle))]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-card-text",
+                              [
+                                _c(
+                                  "v-container",
+                                  [
+                                    _c(
+                                      "v-form",
+                                      {
+                                        ref: "form",
+                                        class: [
+                                          _vm.isSuccess ? "addForm" : "editForm"
+                                        ],
+                                        attrs: { "lazy-validation": "" },
+                                        model: {
+                                          value: _vm.valid,
+                                          callback: function($$v) {
+                                            _vm.valid = $$v
+                                          },
+                                          expression: "valid"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "v-row",
+                                          [
+                                            _c(
+                                              "v-col",
+                                              { attrs: { cols: "6" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    label: "Название",
+                                                    rules: _vm.requiredText(
+                                                      "Название"
+                                                    )
+                                                  },
+                                                  model: {
+                                                    value: _vm.editedItem.name,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "name",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.name"
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-file-input", {
+                                                  attrs: {
+                                                    accept: "image/*",
+                                                    label: "Обложка",
+                                                    rules: _vm.requiredCover(
+                                                      "Обложка"
+                                                    )
+                                                  },
+                                                  model: {
+                                                    value: _vm.cover,
+                                                    callback: function($$v) {
+                                                      _vm.cover = $$v
+                                                    },
+                                                    expression: "cover"
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-img", {
+                                                  directives: [
+                                                    {
+                                                      name: "show",
+                                                      rawName: "v-show",
+                                                      value:
+                                                        _vm.coverUrl !== null,
+                                                      expression:
+                                                        "coverUrl!==null"
+                                                    }
+                                                  ],
+                                                  attrs: { src: _vm.coverUrl }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              { attrs: { cols: "6" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    label:
+                                                      "Порядковый номер (web)",
+                                                    type: "number",
+                                                    min: "0"
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem
+                                                        .serial_number_web,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "serial_number_web",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.serial_number_web"
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    label:
+                                                      "Порядковый номер (mobile)",
+                                                    type: "number",
+                                                    min: "0"
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem
+                                                        .serial_number_mob,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "serial_number_mob",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.serial_number_mob"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-card-actions",
+                              [
+                                _c("v-spacer"),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      color: "error darken-1",
+                                      text: ""
+                                    },
+                                    on: { click: _vm.close }
+                                  },
+                                  [_vm._v("Отмена")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      color: "success darken-1",
+                                      text: ""
+                                    },
+                                    on: { click: _vm.save }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "Сохранить\n                            "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]
+            },
+            proxy: true
+          },
+          {
+            key: "item.actions",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c(
+                  "v-icon",
+                  {
+                    staticClass: "mr-2",
+                    attrs: { color: "warning", small: "" },
+                    on: {
+                      click: function($event) {
+                        return _vm.editItem(item)
+                      }
+                    }
+                  },
+                  [_vm._v("mdi-pencil\n            ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-icon",
+                  {
+                    attrs: { color: "error", small: "" },
+                    on: {
+                      click: function($event) {
+                        return _vm.showDeleteDialog(item)
+                      }
+                    }
+                  },
+                  [_vm._v("mdi-delete\n            ")]
+                )
+              ]
+            }
+          },
+          {
+            key: "no-data",
+            fn: function() {
+              return [_vm._v("Нет данных !")]
+            },
+            proxy: true
+          }
+        ])
+      }),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-dialog",
+            {
+              attrs: { justify: "center", persistent: "", "max-width": "350" },
+              model: {
+                value: _vm.deleteDialog,
+                callback: function($$v) {
+                  _vm.deleteDialog = $$v
+                },
+                expression: "deleteDialog"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c(
+                    "v-card-title",
+                    { staticClass: "headline deleteDialogHead" },
+                    [
+                      _vm._v(
+                        "Вы действительно хотите удалить выбранную строку ?\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "error darken-1", text: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.deleteDialog = false
+                            }
+                          }
+                        },
+                        [_vm._v("Нет\n                    ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "success darken-1", text: "" },
+                          on: { click: _vm.deleteItem }
+                        },
+                        [_vm._v("Да")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: {
+            right: "",
+            top: "",
+            color: _vm.snackbar.color,
+            timeout: _vm.snackbar.time
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "action",
+              fn: function(ref) {
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-icon",
+                    {
+                      attrs: { color: "white" },
+                      on: {
+                        click: function($event) {
+                          _vm.snackbar.show = false
+                        }
+                      }
+                    },
+                    [_vm._v("mdi-close-circle-outline\n            ")]
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.snackbar.show,
+            callback: function($$v) {
+              _vm.$set(_vm.snackbar, "show", $$v)
+            },
+            expression: "snackbar.show"
+          }
+        },
+        [_vm._v("\n        " + _vm._s(_vm.snackbar.text) + "\n        ")]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/LayoutComponent.vue?vue&type=template&id=50f37150&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/LayoutComponent.vue?vue&type=template&id=50f37150& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    { attrs: { id: "inspire" } },
+    [
+      _c(
+        "v-app",
+        { attrs: { id: "inspire" } },
+        [
+          _c(
+            "v-navigation-drawer",
+            {
+              attrs: { app: "", clipped: "" },
+              model: {
+                value: _vm.drawer,
+                callback: function($$v) {
+                  _vm.drawer = $$v
+                },
+                expression: "drawer"
+              }
+            },
+            [
+              _c(
+                "v-list",
+                { attrs: { dense: "" } },
+                [
+                  _c(
+                    "v-list-item",
+                    { attrs: { to: "/admin/categories" } },
+                    [_c("v-list-item-content", [_vm._v("Категории")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item",
+                    { attrs: { to: "/admin/news" } },
+                    [_c("v-list-item-content", [_vm._v("Новости")])],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-app-bar",
+            { attrs: { app: "", "clipped-left": "" } },
+            [
+              _c("v-app-bar-nav-icon", {
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    _vm.drawer = !_vm.drawer
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("v-toolbar-title", [_vm._v("Админ панель")])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-main", [_c("router-view")], 1)
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/NewsComponent.vue?vue&type=template&id=7d67218f&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/NewsComponent.vue?vue&type=template&id=7d67218f& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("v-skeleton-loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.skeleton,
+            expression: "skeleton"
+          }
+        ],
+        staticClass: "mx-auto",
+        attrs: { type: "table-heading,table-thead,table-tbody" }
+      }),
+      _vm._v(" "),
+      _c("v-data-table", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.skeleton,
+            expression: "!skeleton"
+          }
+        ],
+        staticClass: "elevation-1",
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.data,
+          "items-per-page": _vm.data.length,
+          search: _vm.search,
+          "hide-default-footer": ""
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "top",
+            fn: function() {
+              return [
+                _c(
+                  "v-toolbar",
+                  { attrs: { flat: "", color: "white" } },
+                  [
+                    _c("v-toolbar-title", [_vm._v("Категории")]),
+                    _vm._v(" "),
+                    _c("v-divider", {
+                      staticClass: "mx-4",
+                      attrs: { inset: "", vertical: "" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "v-dialog",
+                      {
+                        attrs: { "max-width": "550px" },
                         scopedSlots: _vm._u([
                           {
                             key: "activator",
@@ -38618,11 +39580,20 @@ var render = function() {
                         _c(
                           "v-card",
                           [
-                            _c("v-card-title", [
-                              _c("span", { staticClass: "headline" }, [
-                                _vm._v(_vm._s(_vm.formTitle))
-                              ])
-                            ]),
+                            _c(
+                              "v-card-title",
+                              {
+                                staticClass: "headline",
+                                class: [_vm.isSuccess ? "success" : "warning"]
+                              },
+                              [
+                                _c(
+                                  "span",
+                                  { staticStyle: { color: "white" } },
+                                  [_vm._v(_vm._s(_vm.formTitle))]
+                                )
+                              ]
+                            ),
                             _vm._v(" "),
                             _c(
                               "v-card-text",
@@ -38634,6 +39605,9 @@ var render = function() {
                                       "v-form",
                                       {
                                         ref: "form",
+                                        class: [
+                                          _vm.isSuccess ? "addForm" : "editForm"
+                                        ],
                                         attrs: { "lazy-validation": "" },
                                         model: {
                                           value: _vm.valid,
@@ -38649,7 +39623,7 @@ var render = function() {
                                           [
                                             _c(
                                               "v-col",
-                                              { attrs: { cols: "12" } },
+                                              { attrs: { cols: "6" } },
                                               [
                                                 _c("v-text-field", {
                                                   attrs: {
@@ -38669,6 +39643,82 @@ var render = function() {
                                                     },
                                                     expression:
                                                       "editedItem.name"
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-file-input", {
+                                                  attrs: {
+                                                    accept: "image/*",
+                                                    label: "Обложка"
+                                                  },
+                                                  model: {
+                                                    value: _vm.editedItem.cover,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "cover",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.cover"
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-img", {
+                                                  attrs: { src: _vm.coverUrl }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              { attrs: { cols: "6" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    label:
+                                                      "Порядковый номер (web)",
+                                                    type: "number",
+                                                    min: "0"
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem
+                                                        .serial_number_web,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "serial_number_web",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.serial_number_web"
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    label:
+                                                      "Порядковый номер (mobile)",
+                                                    type: "number",
+                                                    min: "0"
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem
+                                                        .serial_number_mob,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "serial_number_mob",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.serial_number_mob"
                                                   }
                                                 })
                                               ],
@@ -38883,92 +39933,6 @@ var render = function() {
           }
         },
         [_vm._v("\n    " + _vm._s(_vm.snackbar.text) + "\n    ")]
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/LayoutComponent.vue?vue&type=template&id=50f37150&":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/LayoutComponent.vue?vue&type=template&id=50f37150& ***!
-  \************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    { attrs: { id: "inspire" } },
-    [
-      _c(
-        "v-app",
-        { attrs: { id: "inspire" } },
-        [
-          _c(
-            "v-navigation-drawer",
-            {
-              attrs: { app: "", clipped: "" },
-              model: {
-                value: _vm.drawer,
-                callback: function($$v) {
-                  _vm.drawer = $$v
-                },
-                expression: "drawer"
-              }
-            },
-            [
-              _c(
-                "v-list",
-                { attrs: { dense: "" } },
-                [
-                  _c(
-                    "v-list-item",
-                    { attrs: { to: "/admin/categories" } },
-                    [_c("v-list-item-content", [_vm._v("Категории")])],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-app-bar",
-            { attrs: { app: "", "clipped-left": "" } },
-            [
-              _c("v-app-bar-nav-icon", {
-                on: {
-                  click: function($event) {
-                    $event.stopPropagation()
-                    _vm.drawer = !_vm.drawer
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("v-toolbar-title", [_vm._v("Админ панель")])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-main", [_c("router-view")], 1)
-        ],
-        1
       )
     ],
     1
@@ -98100,6 +99064,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
   routes: [{
     path: "/admin/categories",
     component: __webpack_require__(/*! ./components/admin/CategoryComponent.vue */ "./resources/js/components/admin/CategoryComponent.vue")["default"]
+  }, {
+    path: "/admin/news",
+    component: __webpack_require__(/*! ./components/admin/NewsComponent.vue */ "./resources/js/components/admin/NewsComponent.vue")["default"]
   }]
 });
 Vue.component("layout-component", __webpack_require__(/*! ./components/admin/LayoutComponent.vue */ "./resources/js/components/admin/LayoutComponent.vue")["default"]);
@@ -98294,6 +99261,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/NewsComponent.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/admin/NewsComponent.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NewsComponent_vue_vue_type_template_id_7d67218f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewsComponent.vue?vue&type=template&id=7d67218f& */ "./resources/js/components/admin/NewsComponent.vue?vue&type=template&id=7d67218f&");
+/* harmony import */ var _NewsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/NewsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NewsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NewsComponent_vue_vue_type_template_id_7d67218f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NewsComponent_vue_vue_type_template_id_7d67218f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/NewsComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/NewsComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/admin/NewsComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./NewsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/NewsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/NewsComponent.vue?vue&type=template&id=7d67218f&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/admin/NewsComponent.vue?vue&type=template&id=7d67218f& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsComponent_vue_vue_type_template_id_7d67218f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./NewsComponent.vue?vue&type=template&id=7d67218f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/NewsComponent.vue?vue&type=template&id=7d67218f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsComponent_vue_vue_type_template_id_7d67218f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsComponent_vue_vue_type_template_id_7d67218f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/mixins/main.js":
 /*!*************************************!*\
   !*** ./resources/js/mixins/main.js ***!
@@ -98307,6 +99343,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       data: [],
+      cover: null,
+      coverUrl: null,
+      isSuccess: false,
       valid: true,
       skeleton: true,
       editedIndex: -1,
@@ -98323,12 +99362,46 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     formTitle: function formTitle() {
-      return this.editedIndex === -1 ? "Добавление данных" : "Изменение данных";
+      if (this.editedIndex === -1) {
+        this.isSuccess = true;
+        return "Добавление данных";
+      } else {
+        this.isSuccess = false;
+        return "Изменение данных";
+      }
     }
   },
   watch: {
     dialog: function dialog(val) {
       val || this.close();
+    },
+    cover: function cover(newVal) {
+      var _this = this;
+
+      if (typeof newVal === 'string' && newVal.indexOf('http') !== -1) {
+        this.cover = null;
+        this.$nextTick(function () {
+          _this.coverUrl = newVal;
+        });
+      } else if (newVal instanceof File) {
+        this.coverUrl = URL.createObjectURL(newVal);
+
+        if (this.editedIndex > -1) {
+          this.editedItem.updatedCover = newVal;
+        } else {
+          this.editedItem.cover = newVal;
+        }
+      } else if (newVal === undefined) {
+        if (this.editedIndex > -1) {
+          this.coverUrl = this.editedItem.cover;
+          delete this.editedItem.updatedCover;
+        } else {
+          this.coverUrl = null;
+        }
+      }
+    },
+    'editedItem.cover': function editedItemCover(val) {
+      this.cover = val;
     }
   },
   methods: {
@@ -98346,8 +99419,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     requiredImage: function requiredImage(name) {
       return [function (v) {
-        return !!v || "'" + name + "' не загружена!";
+        return !!v || name + " не загружена!";
       }];
+    },
+    requiredCover: function requiredCover(name) {
+      if (this.editedIndex === -1) {
+        return this.requiredImage(name);
+      }
     },
     requiredList: function requiredList(name) {
       return [function (v) {
@@ -98372,13 +99450,15 @@ __webpack_require__.r(__webpack_exports__);
       this.snackbar.time = time;
     },
     close: function close() {
-      var _this = this;
+      var _this2 = this;
 
       this.dialog = false;
       this.deleteDialog = false;
+      this.coverUrl = null;
+      this.cover = null;
       this.$nextTick(function () {
-        _this.editedItem = Object.assign({}, _this.defaultItem);
-        _this.editedIndex = -1;
+        _this2.editedItem = Object.assign({}, _this2.defaultItem);
+        _this2.editedIndex = -1;
       });
       this.$refs.form.resetValidation();
     },

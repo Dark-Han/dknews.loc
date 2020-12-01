@@ -6,6 +6,9 @@
           <v-list-item to="/admin/categories">
             <v-list-item-content>Категории</v-list-item-content>
           </v-list-item>
+          <v-list-item to="/admin/news">
+            <v-list-item-content>Новости</v-list-item-content>
+          </v-list-item>
         </v-list>
       </v-navigation-drawer>
 

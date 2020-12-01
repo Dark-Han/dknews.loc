@@ -14,7 +14,10 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
+            $table->smallIncrements('id');
+            $table->string('cover',255);
+            $table->unsignedTinyInteger('serial_number_web')->default(0);
+            $table->unsignedTinyInteger('serial_number_mob')->default(0);
             $table->string("name",255);
         });
     }

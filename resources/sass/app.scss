@@ -41,9 +41,26 @@
     font-size: 18.5px !important;
   }
 
-  .v-label--active {
-    color: #1976d2 !important;
-    caret-color: #1976d2 !important;
+  .addForm {
+    .primary--text {
+      color: #4caf50 !important;
+      caret-color: #4caf50 !important;
+    }
+    .v-label--active {
+      color: #4caf50;
+      caret-color: #4caf50;
+    }
+  }
+
+  .editForm {
+    .primary--text {
+      color: #fb8c00 !important;
+      caret-color: #fb8c00 !important;
+    }
+    .v-label--active {
+      color: #fb8c00;
+      caret-color: #fb8c00;
+    }
   }
 
   .v-list-item__title,

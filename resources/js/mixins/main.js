@@ -33,10 +33,10 @@ export default {
         val || this.close();
       },
       cover(newVal){
-            if(typeof(newVal)==='string' && newVal.indexOf('http')!==-1){
+            if(typeof(newVal)==='string'){
                 this.cover = null;
                 this.$nextTick(() => {
-                    this.coverUrl=newVal;
+                    this.coverUrl='/storage/'+newVal;
                 });
             }else if(newVal instanceof File){
                 this.coverUrl= URL.createObjectURL(newVal)
@@ -47,7 +47,7 @@ export default {
                 }
             }else if(newVal===undefined){
                 if(this.editedIndex>-1){
-                  this.coverUrl=this.editedItem.cover;
+                  this.coverUrl='/storage/'+this.editedItem.cover;
                   delete this.editedItem.updatedCover;
                 }else{
                   this.coverUrl=null;

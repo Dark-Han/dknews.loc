@@ -13,7 +13,6 @@ class SimpleImageHandlerService implements iImageHandler {
     }
 
     public function delete($path):void{
-        $path=str_replace(url('storage'),'',$path);
         Storage::delete($path);
     }
 

@@ -2155,6 +2155,14 @@ __webpack_require__.r(__webpack_exports__);
         value: "name",
         sortable: false
       }, {
+        text: "Порядковый номер (веб)",
+        value: "serial_number_web",
+        sortable: false
+      }, {
+        text: "Порядковый номер (моб)",
+        value: "serial_number_mob",
+        sortable: false
+      }, {
         text: "Действия",
         value: "actions",
         sortable: false
@@ -2476,6 +2484,14 @@ __webpack_require__.r(__webpack_exports__);
       headers: [{
         text: "Название",
         value: "name",
+        sortable: false
+      }, {
+        text: "Порядковый номер (веб)",
+        value: "serial_number_web",
+        sortable: false
+      }, {
+        text: "Порядковый номер (моб)",
+        value: "serial_number_mob",
         sortable: false
       }, {
         text: "Действия",
@@ -99378,10 +99394,10 @@ __webpack_require__.r(__webpack_exports__);
     cover: function cover(newVal) {
       var _this = this;
 
-      if (typeof newVal === 'string' && newVal.indexOf('http') !== -1) {
+      if (typeof newVal === 'string') {
         this.cover = null;
         this.$nextTick(function () {
-          _this.coverUrl = newVal;
+          _this.coverUrl = '/storage/' + newVal;
         });
       } else if (newVal instanceof File) {
         this.coverUrl = URL.createObjectURL(newVal);
@@ -99393,7 +99409,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       } else if (newVal === undefined) {
         if (this.editedIndex > -1) {
-          this.coverUrl = this.editedItem.cover;
+          this.coverUrl = '/storage/' + this.editedItem.cover;
           delete this.editedItem.updatedCover;
         } else {
           this.coverUrl = null;

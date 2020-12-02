@@ -15,7 +15,7 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'cover' => asset('storage/' . $this->cover),
+            'cover' => $this->cover,
             'serial_number_web' => $this->serial_number_web,
             'serial_number_mob' => $this->serial_number_mob,
             'name' => $this->name,

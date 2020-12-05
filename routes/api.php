@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('v1/categories','Api\v1\CategoryController');
+Route::apiResource('v1/categories','Api\V1\CategoryController');
+Route::apiResource('v1/news','Api\V1\NewsController');

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Api;
+namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Category */
-class CategoryResource extends JsonResource
+/** @mixin \App\Models\Disposition */
+class DispositionResource extends JsonResource
 {
     /**
      * @param \Illuminate\Http\Request $request
@@ -15,9 +15,6 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'cover' => $this->cover,
-            'serial_number_web' => $this->serial_number_web,
-            'serial_number_mob' => $this->serial_number_mob,
             'name' => $this->name,
         ];
     }

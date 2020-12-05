@@ -63,6 +63,10 @@
     }
   }
 
+    .v-label--active{
+        font-size: 20px !important;
+    }
+
   .v-list-item__title,
   .v-list-item__content {
     font-size: 15px !important;
@@ -83,6 +87,13 @@
       padding-bottom: 0px;
     }
   }
+
+    .ck-content {
+        min-height:550px;
+        color:black !important;
+    }
+
+    .v-dialog__content {z-index: 203 !important;}
 }
 
 /* width */

@@ -10948,6 +10948,10 @@ a.text-dark:focus {
   caret-color: #fb8c00;
 }
 
+#adminPanel .v-label--active {
+  font-size: 20px !important;
+}
+
 #adminPanel .v-list-item__title,
 #adminPanel .v-list-item__content {
   font-size: 15px !important;
@@ -10963,6 +10967,15 @@ a.text-dark:focus {
 
 #adminPanel .v-card .v-card__text {
   padding-bottom: 0px;
+}
+
+#adminPanel .ck-content {
+  min-height: 550px;
+  color: black !important;
+}
+
+#adminPanel .v-dialog__content {
+  z-index: 203 !important;
 }
 
 /* width */

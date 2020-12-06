@@ -51,32 +51,19 @@
                                             lazy-validation
                                             :class="[isSuccess ? 'addForm' : 'editForm']">
                                         <v-row>
-                                            <v-col cols="6">
+                                            <v-col cols="12">
+                                                <v-autocomplete
+                                                    v-model="editedItem.link_type_id"
+                                                    item-value="id"
+                                                    item-text="name"
+                                                    :items="linkTypes"
+                                                    label="Тип ссылки"
+                                                    :rules="requiredList('Тип ссылки')"
+                                                ></v-autocomplete>
                                                 <v-text-field
-                                                    v-model="editedItem.name"
-                                                    label="Название"
-                                                    :rules="requiredText('Название')"
-                                                ></v-text-field>
-                                                <v-file-input
-                                                    accept="image/*"
-                                                    label="Обложка"
-                                                    v-model="cover"
-                                                    :rules="requiredCover('Обложка')"
-                                                ></v-file-input>
-                                                <v-img :src='coverUrl' v-show="coverUrl!==null"></v-img>
-                                            </v-col>
-                                            <v-col cols="6">
-                                                <v-text-field
-                                                    v-model="editedItem.serial_number_web"
-                                                    label="Порядковый номер (web)"
-                                                    type="number"
-                                                    min="0"
-                                                ></v-text-field>
-                                                <v-text-field
-                                                    v-model="editedItem.serial_number_mob"
-                                                    label="Порядковый номер (mobile)"
-                                                    type="number"
-                                                    min="0"
+                                                    v-model="editedItem.link"
+                                                    label="Cсылка"
+                                                    :rules="requiredText('Cсылка')"
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
@@ -155,48 +142,32 @@
     export default {
         mixins: [main],
         data: () => ({
+            linkTypes:[],
             headers: [
-                {text: "Название", value: "name", sortable: false},
-                { text: "Порядковый номер (веб)", value: "serial_number_web", sortable: false },
-                { text: "Порядковый номер (моб)", value: "serial_number_mob", sortable: false },
-                {text: "Действия", value: "actions", sortable: false},
+                {text: "Действия", value: "actions", sortable: false,width:20},
+                {text: "Тип ссылки", value: "link_types.name", sortable: false,width:250},
+                { text: "Ссылка", value: "link", sortable: false }
             ],
             coverUrl: '',
             editedItem: {
-                name: "",
-                cover: null,
-                serial_number_web: 0,
-                serial_number_mob: 0,
+                link_type_id:undefined,
+                link: undefined
             },
             defaultItem: {
-                name: "",
-                cover: null,
-                serial_number_web: 0,
-                serial_number_mob: 0,
+                link_type_id:undefined,
+                link: undefined
             },
         }),
         created() {
             this.index();
         },
-        watch: {
-            'editedItem.serial_number_web': function (val) {
-                if (Number(val) < 0) {
-                    this.editedItem.serial_number_web = 0;
-                }
-            },
-            'editedItem.serial_number_mob': function (val) {
-                if (Number(val) < 0) {
-                    this.editedItem.serial_number_mob = 0;
-                }
-            }
-        },
         methods: {
             index() {
                 axios
-                    .get("/api/v1/categories")
+                    .get("/api/v1/links")
                     .then((response) => {
-                        var res = response.data;
-                        this.data = res.data;
+                        this.data = response.data.links;
+                        this.linkTypes = response.data.link_types;
                         this.skeleton = false;
                     })
                     .catch(function (error) {
@@ -205,58 +176,41 @@
             store() {
                 var validate = this.$refs.form.validate();
                 if (validate) {
-                    var formData = this.getFormDataFrom(this.editedItem);
-                    axios.post('/api/v1/categories', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }).then((res) => {
-                        this.showSnack("success", "Данные успешно добавлены!");
-                        this.data.unshift(res.data.data);
-                        this.close();
-                    })
-                        .catch(function (error) {
-                            console.log(error);
+                    axios.post('/api/v1/links',this.editedItem)
+                        .then( (response)=>{
+                            this.showSnack("success", "Данные успешно добавлены!");
+                            this.data.unshift(response.data.link);
+                            this.close();
+                        })
+                        .catch( (error)=>{
+                            this.showSnack("error", "Ссылка на выбранный сервис уже добавлена!");
                         });
                 }
-            },
-            getFormDataFrom(data) {
-                var formData = new FormData();
-                for (var i in data) {
-                    formData.append(i, data[i]);
-                }
-                return formData;
             },
             update() {
                 var validate = this.$refs.form.validate();
                 if (validate) {
-                    var formData = this.getFormDataFrom(this.editedItem);
-                    axios.post("/api/v1/categories/" + this.editedItem.id + "?_method=PUT", formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                        .then((res) => {
+                    axios.post("/api/v1/links/" + this.editedItem.id + "?_method=PUT", this.editedItem)
+                        .then((response) => {
                             this.showSnack("success", "Данные успешно изменены!");
-                            Object.assign(this.data[this.editedIndex], res.data.data);
+                            Object.assign(this.data[this.editedIndex], response.data.link);
                             this.close();
                         })
-                        .catch(function (error) {
-                            console.log(error);
+                        .catch( (error)=>{
+                            this.showSnack("error", "Ссылка на выбранный сервис уже добавлена!");
                         });
                 }
             },
             deleteItem() {
-                axios.post("/api/v1/categories/" + this.editedItem.id + "?_method=DELETE", {
-                    cover:this.editedItem.cover
-                    })
-                    .then((res) => {
-                        this.data.splice(this.editedIndex, 1);
-                        this.showSnack("success", "Данные успешно удалены!");
-                        this.close();
+                axios
+                    .delete("/api/v1/links/" + this.editedItem.id)
+                    .then((response) => {
+                            this.data.splice(this.editedIndex, 1);
+                            this.showSnack("success", "Данные успешно удалены !");
+                            this.close();
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        this.showSnack("success", "Ошибка сервера!");
                     });
             }
         },

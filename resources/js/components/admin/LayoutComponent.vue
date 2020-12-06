@@ -9,6 +9,9 @@
           <v-list-item to="/admin/news">
             <v-list-item-content>Новости</v-list-item-content>
           </v-list-item>
+            <v-list-item to="/admin/links">
+                <v-list-item-content>Ссылки</v-list-item-content>
+            </v-list-item>
         </v-list>
       </v-navigation-drawer>
 

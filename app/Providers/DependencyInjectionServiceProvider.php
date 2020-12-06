@@ -8,12 +8,11 @@ use App\Services\CategoryService;
 use App\Services\ImageHandlers\SimpleImageHandlerService;
 
 class DependencyInjectionServiceProvider extends ServiceProvider
-{   
+{
 
     public $singletons = [
-        // 'CategoryService' => CategoryService::class
     ];
-    
+
     private function registerCategoryService(){
         $this->app->singleton(CategoryService::class, function ($app) {
             return new CategoryService(

@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use App\Services\Api\NewspaperService;
 use Illuminate\Support\ServiceProvider;
 
-use App\Services\CategoryService;
-use App\Services\ImageHandlers\SimpleImageHandlerService;
+use App\Services\Api\CategoryService;
+use App\Services\Api\ImageHandlers\SimpleImageHandlerService;
 
 class DependencyInjectionServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,14 @@ class DependencyInjectionServiceProvider extends ServiceProvider
             );
         });
     }
+
+    private function registerNewspaperService(){
+        $this->app->singleton(NewspaperService::class, function ($app) {
+            return new NewspaperService(
+                new SimpleImageHandlerService()
+            );
+        });
+    }
     /**
      * Register services.
      *
@@ -28,6 +37,7 @@ class DependencyInjectionServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCategoryService();
+        $this->registerNewspaperService();
     }
 
     /**

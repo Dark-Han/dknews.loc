@@ -10978,6 +10978,14 @@ a.text-dark:focus {
   z-index: 203 !important;
 }
 
+#adminPanel .v-dialog {
+  overflow-x: hidden !important;
+}
+
+#adminPanel .v-dialog .v-card {
+  overflow-x: hidden !important;
+}
+
 /* width */
 
 ::-webkit-scrollbar {

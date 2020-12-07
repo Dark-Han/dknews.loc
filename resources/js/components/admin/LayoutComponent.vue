@@ -12,6 +12,9 @@
             <v-list-item to="/admin/links">
                 <v-list-item-content>Ссылки</v-list-item-content>
             </v-list-item>
+            <v-list-item to="/admin/newspapers">
+                <v-list-item-content>Газеты</v-list-item-content>
+            </v-list-item>
         </v-list>
       </v-navigation-drawer>
 

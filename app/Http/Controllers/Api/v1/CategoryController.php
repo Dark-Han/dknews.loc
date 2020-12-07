@@ -7,7 +7,7 @@ use App\Http\Requests\V1\Category\CreateCategoryRequest;
 use App\Http\Requests\V1\Category\DeleteCategoryRequest;
 use App\Http\Requests\V1\Category\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Services\CategoryService;
+use App\Services\Api\CategoryService;
 use App\Http\Resources\Api\V1\CategoryResource;
 
 /**

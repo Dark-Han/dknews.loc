@@ -24,6 +24,10 @@ const router = new VueRouter({
           path: "/admin/links",
           component: require("./components/admin/LinkComponent.vue").default,
       },
+      {
+          path: "/admin/newspapers",
+          component: require("./components/admin/NewspaperComponent.vue").default,
+      },
   ],
 });
 

@@ -94,6 +94,12 @@
     }
 
     .v-dialog__content {z-index: 203 !important;}
+    .v-dialog{
+        overflow-x: hidden !important;
+        .v-card{
+            overflow-x: hidden !important;
+        }
+    }
 }
 
 /* width */

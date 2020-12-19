@@ -105,7 +105,7 @@
                                                         label="Новая газета"
                                                         v-model="editedItem.updatedNewspaper"
                                                     ></v-file-input>
-                                                    <a :href="'/storage/'+editedItem.newspaper" target="_blank">Текущая газета</a>
+                                                    <a :href="'/storage/'+editedItem.newspaper" target="_blank" class="currentFile">Текущая газета</a>
                                                 </div>
                                                 <v-file-input
                                                     accept="image/*"

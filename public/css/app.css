@@ -11024,6 +11024,11 @@ a.text-dark:focus {
   margin-bottom: 0px;
 }
 
+#adminPanel .currentFile {
+  float: right !important;
+  margin-top: -16px !important;
+}
+
 /* width */
 
 ::-webkit-scrollbar {

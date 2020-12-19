@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\JournalType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,5 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         factory(App\Models\Disposition::class, 5)->create();
         factory(App\Models\Limit::class, 5)->create();
+        factory(App\Models\JournalType::class,2)->create();
     }
 }

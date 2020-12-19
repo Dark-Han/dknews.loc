@@ -28,6 +28,10 @@ const router = new VueRouter({
           path: "/admin/newspapers",
           component: require("./components/admin/NewspaperComponent.vue").default,
       },
+      {
+          path: "/admin/journals",
+          component: require("./components/admin/JournalComponent.vue").default,
+      },
   ],
 });
 

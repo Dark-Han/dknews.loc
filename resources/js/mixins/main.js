@@ -80,10 +80,10 @@ export default {
         return [(v) => !!v || name + " не выбрана!"];
       },
       editItem(item) {
-        this.editedIndex = this.data.indexOf(item);
-        this.editedItem = Object.assign(this.editedItem, item);
-        this.dialog = true;
-      },
+            this.editedIndex = this.data.indexOf(item);
+            this.editedItem = Object.assign(this.editedItem, item);
+            this.dialog = true;
+        },
       showDeleteDialog(item) {
         this.editedIndex = this.data.indexOf(item);
         this.editedItem = Object.assign(this.editedItem, item);

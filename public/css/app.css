@@ -10938,6 +10938,10 @@ a.text-dark:focus {
   caret-color: #4caf50;
 }
 
+#adminPanel .addForm .foreverSwitch label {
+  color: #4caf50 !important;
+}
+
 #adminPanel .editForm .primary--text {
   color: #fb8c00 !important;
   caret-color: #fb8c00 !important;
@@ -10946,6 +10950,10 @@ a.text-dark:focus {
 #adminPanel .editForm .v-label--active {
   color: #fb8c00;
   caret-color: #fb8c00;
+}
+
+#adminPanel .editForm .foreverSwitch label {
+  color: #fb8c00 !important;
 }
 
 #adminPanel .v-label--active {
@@ -10984,6 +10992,36 @@ a.text-dark:focus {
 
 #adminPanel .v-dialog .v-card {
   overflow-x: hidden !important;
+}
+
+#adminPanel .checkboxBtn {
+  display: block !important;
+}
+
+#adminPanel .checkboxBtn .v-input__slot {
+  display: block !important;
+}
+
+#adminPanel .checkboxBtn .v-input__slot .v-input--selection-controls__input {
+  display: block !important;
+}
+
+#adminPanel .radioBtnTitle {
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+
+#adminPanel .foreverSwitch {
+  margin-top: -36px;
+  padding-left: 0px !important;
+}
+
+#adminPanel .foreverSwitch .v-input {
+  margin-top: 0px;
+}
+
+#adminPanel .foreverSwitch .v-input label {
+  margin-bottom: 0px;
 }
 
 /* width */

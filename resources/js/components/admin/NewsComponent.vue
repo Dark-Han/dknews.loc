@@ -16,7 +16,7 @@
         >
             <template v-slot:top>
                 <v-toolbar flat color="white">
-                    <v-toolbar-title>Категории</v-toolbar-title>
+                    <v-toolbar-title>Новости</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-dialog v-model="dialog" fullscreen eager>
                         <template v-slot:activator="{ on }">
@@ -46,7 +46,7 @@
                                 <v-btn
                                     icon
                                     dark
-                                    @click="dialog = false"
+                                    @click="closeDialog"
                                 >
                                     <v-icon>mdi-close</v-icon>
                                 </v-btn>
@@ -56,7 +56,7 @@
                                     <v-btn
                                         dark
                                         text
-                                        @click="dialog = false"
+                                        @click="save"
                                     >
                                         Сохранить
                                     </v-btn>
@@ -71,23 +71,88 @@
                                         <v-row>
                                             <v-col cols="4">
                                                 <v-text-field
-                                                    v-model="editedItem.name"
+                                                    v-model="editedItem.title"
                                                     label="Название"
                                                     :rules="requiredText('Название')"
                                                 ></v-text-field>
+                                                <v-autocomplete
+                                                    v-model="editedItem.category_id"
+                                                    item-value="id"
+                                                    item-text="name"
+                                                    :items="categories"
+                                                    label="Категория"
+                                                    :rules="requiredList('Категория')"
+                                                ></v-autocomplete>
+
                                                 <v-file-input
                                                     accept="image/*"
                                                     label="Обложка"
-                                                    v-model="editedItem.cover"
+                                                    @change="coverUploadhandler"
+                                                    :rules="requiredImage('Обложка')"
+                                                    :placeholder="editedIndex>-1?'Заменить обложку':''"
                                                 ></v-file-input>
-                                                <v-img :src='coverUrl'></v-img>
+
+                                                <p class="radioBtnTitle primary--text">Расположение</p>
+                                                <v-radio-group v-model="editedItem.disposition_id">
+                                                    <v-row>
+                                                        <v-col
+                                                            v-for="(disposition,i) in dispositions"
+                                                            :key="i">
+                                                            <v-radio
+                                                                :label="disposition.name"
+                                                                color="success"
+                                                                hide-details
+                                                                class="checkboxBtn"
+                                                                :value="disposition.id"
+                                                            ></v-radio>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-radio-group>
+
+                                                <v-col cols="4 foreverSwitch">
+                                                    <v-switch
+                                                        v-model="editedItem.forever"
+                                                        inset
+                                                        label="На вечно"
+                                                    ></v-switch>
+                                                </v-col>
+
+                                                <div v-show="!editedItem.forever">
+                                                    <p class="radioBtnTitle primary--text">Тип лимита</p>
+                                                    <v-radio-group v-model="editedItem.limit_id">
+                                                        <v-row>
+                                                            <v-col
+                                                                v-for="(limit,i) in limits"
+                                                                :key="i">
+                                                                <v-radio
+                                                                    :label="limit.name"
+                                                                    color="success"
+                                                                    hide-details
+                                                                    class="checkboxBtn"
+                                                                    :value="limit.id"
+                                                                ></v-radio>
+                                                            </v-col>
+                                                        </v-row>
+
+                                                    </v-radio-group>
+
+                                                    <timestamp-component
+                                                        :currentDate="editedItem.timestampSt"
+                                                        :editedIndex="editedIndex"
+                                                        @onSetTimestamp="setTimestamp('timestampSt',$event)"></timestamp-component>
+                                                    <timestamp-component
+                                                        :currentDate="editedItem.timestampEn"
+                                                        :editedIndex="editedIndex"
+                                                        @onSetTimestamp="setTimestamp('timestampEn',$event)"></timestamp-component>
+                                                </div>
                                             </v-col>
-                                            <v-col cols="8">
-                                                <editor
+                                            <v-col cols="8" id="editor">
+                                                <editor-component
                                                     api-key="tinymceApiKey"
                                                     :init='tinymceInit'
                                                     v-model="editedItem.text"
-                                                    />
+                                                    v-on:onInit="editorLoad"
+                                                />
                                             </v-col>
                                         </v-row>
                                     </v-form>
@@ -154,59 +219,80 @@
     import main from "../../mixins/main.js";
     import Editor from '@tinymce/tinymce-vue'
     import tinymce from "../../mixins/tinymce.js";
+    import Timestamp from "../formInputs/TimestampComponent";
+
     export default {
-        mixins: [main,tinymce],
+        mixins: [main, tinymce],
         components: {
-            'editor': Editor
+            'editor-component': Editor,
+            'timestamp-component': Timestamp
         },
         data: () => ({
-            url: '/api/v1/news',
+            editor: null,
+            categories: [],
+            dispositions: [],
+            limits: [],
             headers: [
-                {text: "Название", value: "name", sortable: false},
-                {text: "Порядковый номер (веб)", value: "serial_number_web", sortable: false},
-                {text: "Порядковый номер (моб)", value: "serial_number_mob", sortable: false},
-                {text: "Действия", value: "actions", sortable: false},
+                {text: "Действия", value: "actions", sortable: false, width: 20},
+                {text: "Заголовок", value: "title", sortable: false},
+                {text: "Категория", value: "category.name", sortable: false},
+                {text: "Расположение", value: "disposition.name", sortable: false},
+                {text: "Тип лимита", value: "limit.name", sortable: false},
+                {text: "На вечно", value: "forever", sortable: false},
+                {text: "Дата начала", value: "date_st", sortable: false},
+                {text: "Дата конца", value: "date_en", sortable: false},
+                {text: "Просмотрено", value: "seen", sortable: false},
+                {text: "Лимит", value: "must_seen", sortable: false},
             ],
             coverUrl: '',
             editedItem: {
-                name: "",
-                text:"",
+                title: '',
+                category_id: '',
+                text: '',
+                disposition_id: 1,
+                timestampSt: null,
+                timestampEn: null,
+                seen: 0,
+                must_seen: 0,
+                limit_id: 1,
+                forever: false,
                 cover: null,
-                serial_number_web: 0,
-                serial_number_mob: 0,
+                uploadedImages: []
             },
             defaultItem: {
-                name: "",
+                title: '',
+                category_id: '',
+                text: '',
+                disposition_id: 1,
+                timestampSt: null,
+                timestampEn: null,
+                seen: 0,
+                must_seen: 0,
+                limit_id: 1,
+                forever: false,
                 cover: null,
-                serial_number_web: 0,
-                serial_number_mob: 0,
+                uploadedImages: []
             },
         }),
         created() {
             this.index();
+            this.getCategories();
+            this.getDispositions();
+            this.getLimits();
+            this.setTinymceImageUploaderConfig();
         },
         watch: {
-            'editedItem.serial_number_web': function (val) {
-                if (Number(val) < 0) {
-                    this.editedItem.serial_number_web = 0;
-                }
+            'editedItem.date_st': function (val) {
+                this.dateStFormatted = this.formatDate(val);
             },
-            'editedItem.serial_number_mob': function (val) {
-                if (Number(val) < 0) {
-                    this.editedItem.serial_number_mob = 0;
-                }
-            },
-            'editedItem.cover': function (val) {
-                this.coverUrl = URL.createObjectURL(this.editedItem.cover)
-            },
-            'editedItem.text':function(val){
-                console.log(val);
+            'editedItem.date_en': function (val) {
+                this.dateEnFormatted = this.formatDate(val);
             }
         },
         methods: {
-            index() {
+            async index() {
                 axios
-                    .get(this.url)
+                    .get('/api/v1/news')
                     .then((response) => {
                         this.data = response.data.data;
                         this.skeleton = false;
@@ -214,19 +300,44 @@
                     .catch(function (error) {
                     });
             },
+            async getCategories() {
+                axios.get('/api/v1/categories')
+                    .then((response) => {
+                        this.categories = response.data.data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
+            async getDispositions() {
+                axios.get('/api/v1/dispositions')
+                    .then((response) => {
+                        this.dispositions = response.data.dispositions;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
+            async getLimits() {
+                axios.get('/api/v1/limits')
+                    .then((response) => {
+                        this.limits = response.data.limits;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
+            editorLoad($event, editor) {
+                this.editor = editor;
+            },
             store() {
                 var validate = this.$refs.form.validate();
                 if (validate) {
-                    var formData = this.getFormDataFrom(this.editedItem);
-                    axios.post(this.url, formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }).then((response) => {
-                        var res = response.data;
-                        this.data.unshift(res.category);
+                    axios.post('/api/v1/news', this.editedItem)
+                        .then((response) => {
+                            this.data.unshift(response.data.data);
                         this.close();
-                    })
+                        })
                         .catch(function (error) {
                             console.log(error);
                         });
@@ -240,10 +351,11 @@
                 return formData;
             },
             update() {
+                console.log(this.editedItem);
                 axios
-                    .put(this.url + this.editedItem.id, this.editedItem)
+                    .put('/api/v1/news/' + this.editedItem.id, this.editedItem)
                     .then((response) => {
-                        Object.assign(this.data[this.editedIndex], this.editedItem);
+                        Object.assign(this.data[this.editedIndex], response.data.data);
                         this.close();
                     })
                     .catch(function (error) {
@@ -252,12 +364,108 @@
             },
             deleteItem() {
                 axios
-                    .delete(this.url + this.editedItem.id)
+                    .delete('/api/v1/news/' + this.editedItem.id)
                     .then((response) => {
                         this.data.splice(this.editedIndex, 1);
                         this.showSnack("success", "Данные успешно удалены !");
                         this.close();
                     })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            editItem(item) {
+                this.editedIndex = this.data.indexOf(item);
+                this.editedItem = {
+                    id: item.id,
+                    title: item.title,
+                    cover: item.cover,
+                    disposition_id: item.disposition.id,
+                    limit_id: item.limit.id,
+                    category_id: item.category.id,
+                    text: item.text,
+                    seen: item.seen,
+                    must_seen: item.must_seen,
+                    forever: item.forever,
+                    timestampSt: {
+                        date: item.date_st,
+                        time: item.date_st
+                    },
+                    timestampEn: {
+                        date: item.date_en,
+                        time: item.date_en
+                    },
+                    uploadedImages: []
+                };
+                this.dialog = true;
+            },
+            setTimestamp(paramName, timestamp) {
+                this.editedItem[paramName] = {
+                    date: timestamp.date,
+                    time: timestamp.time
+                };
+            },
+            coverUploadhandler(image) {
+                let formData = new FormData();
+                formData.append('file', image);
+                axios.post('/api/v1/news/image?_method=PUT', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((response) => {
+                    let path = response.data.path;
+                    this.editedItem.uploadedImages.push({'path': path});
+                    this.editedItem.cover = path;
+                    //Ищем обложку в теле новости
+                    var editor = document.querySelector('iframe').contentDocument.body;
+                    let cover = editor.querySelector('#cover');
+                    //Если обложка существует то заменяем её
+                    if (cover !== null) {
+                        this.editor.dom.setAttribs(this.editor.dom.select('#cover'), {'src': '/storage/' + path});
+                        this.editedItem.text = this.editor.getContent();
+                    }
+                    //Если не существует создаём новую
+                    else {
+                        this.editor.execCommand('mceInsertContent', false, '</br>' +
+                            '<img src="/storage/' + path + '" id="cover"></img>');
+                    }
+                })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            setTinymceImageUploaderConfig() {
+                this.tinymceInit.images_upload_handler = this.imageUploadhandler;
+            },
+            imageUploadhandler(blobInfo, success, failure, progress) {
+                let formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+                axios.post('/api/v1/news/image?_method=PUT', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((response) => {
+                    let path = response.data.path;
+                    this.editedItem.uploadedImages.push({'path': path});
+                    success('/storage/' + path);
+                })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            closeDialog(){
+                if(this.editedItem.uploadedImages.length!==0){
+                    this.deleteUploadedImagesOfNotCreatedNews();
+                }
+                this.dialog=false;
+            },
+            deleteUploadedImagesOfNotCreatedNews() {
+                axios.post('/api/v1/news/image?_method=DELETE', {
+                    uploadedImages:this.editedItem.uploadedImages
+                })
+                    .then((response) => {
+                    let path = response.data.path;
+                })
                     .catch(function (error) {
                         console.log(error);
                     });

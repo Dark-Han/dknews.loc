@@ -192,7 +192,6 @@
     export default {
         mixins: [main],
         data: () => ({
-            dateFormatted:undefined,
             dateMenu: false,
             headers: [
                 {text: "Действия", value: "actions", sortable: false,width:20},

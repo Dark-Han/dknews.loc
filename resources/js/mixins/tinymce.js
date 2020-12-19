@@ -16,7 +16,6 @@ export default {
                 bullist numlist outdent indent | removeformat |fullscreen|preview",
             toolbar_sticky: true,
             image_uploadtab: true,
-            images_upload_url: 'postAcceptor.php',
             images_upload_base_path: '/some/basepath',
             image_description: false,
             image_dimensions: false

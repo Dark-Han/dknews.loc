@@ -22,18 +22,16 @@ class NewsResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'category_id' => $this->category_id,
+            'category' => new CategoryResource($this->whenLoaded('category')),
             'text' => $this->text,
-            'disposition_id' => DispositionResource::collection($this->whenLoaded('dispositions')),
+            'disposition' => new DispositionResource($this->whenLoaded('disposition')),
             'date_st' => $this->date_st,
             'date_en' => $this->date_en,
             'seen' => $this->seen,
             'must_seen' => $this->must_seen,
-            'limit_id' => LimitResource::collection($this->whenLoaded('limits')),
+            'limit' => new LimitResource($this->whenLoaded('limit')),
             'forever' => $this->forever,
-            'cover' => $this->cover,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'cover' => $this->cover
         ];
     }
 }

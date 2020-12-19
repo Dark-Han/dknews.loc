@@ -6,6 +6,7 @@ use App\Services\Api\NewspaperService;
 use Illuminate\Support\ServiceProvider;
 
 use App\Services\Api\CategoryService;
+use App\Services\Api\NewsService;
 use App\Services\Api\ImageHandlers\SimpleImageHandlerService;
 
 class DependencyInjectionServiceProvider extends ServiceProvider
@@ -29,6 +30,14 @@ class DependencyInjectionServiceProvider extends ServiceProvider
             );
         });
     }
+
+    private function registerNewsService(){
+        $this->app->singleton(NewsService::class, function ($app) {
+            return new NewsService(
+                new SimpleImageHandlerService()
+            );
+        });
+    }
     /**
      * Register services.
      *
@@ -38,6 +47,7 @@ class DependencyInjectionServiceProvider extends ServiceProvider
     {
         $this->registerCategoryService();
         $this->registerNewspaperService();
+        $this->registerNewsService();
     }
 
     /**

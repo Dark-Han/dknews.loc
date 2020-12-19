@@ -156,10 +156,10 @@
         mixins: [main],
         data: () => ({
             headers: [
+                {text: "Действия", value: "actions", sortable: false,width:20},
                 {text: "Название", value: "name", sortable: false},
                 { text: "Порядковый номер (веб)", value: "serial_number_web", sortable: false },
-                { text: "Порядковый номер (моб)", value: "serial_number_mob", sortable: false },
-                {text: "Действия", value: "actions", sortable: false},
+                { text: "Порядковый номер (моб)", value: "serial_number_mob", sortable: false }
             ],
             coverUrl: '',
             editedItem: {

@@ -16,7 +16,7 @@
         >
             <template v-slot:top>
                 <v-toolbar flat color="white">
-                    <v-toolbar-title>Категории</v-toolbar-title>
+                    <v-toolbar-title>Ссылки</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-dialog v-model="dialog" max-width="550px">
                         <template v-slot:activator="{ on }">

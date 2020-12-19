@@ -50,6 +50,12 @@
       color: #4caf50;
       caret-color: #4caf50;
     }
+
+      .foreverSwitch{
+          label{
+              color: #4caf50 !important;
+          }
+      }
   }
 
   .editForm {
@@ -61,6 +67,11 @@
       color: #fb8c00;
       caret-color: #fb8c00;
     }
+      .foreverSwitch{
+          label{
+              color: #fb8c00 !important;
+          }
+      }
   }
 
     .v-label--active{
@@ -98,6 +109,32 @@
         overflow-x: hidden !important;
         .v-card{
             overflow-x: hidden !important;
+        }
+    }
+
+    .checkboxBtn{
+        display: block !important;
+            .v-input__slot{
+                display: block !important;
+                    .v-input--selection-controls__input{
+                        display: block !important;
+                    }
+            }
+    }
+
+    .radioBtnTitle{
+        font-size: 16px;
+        margin-bottom: 0px;
+    }
+
+    .foreverSwitch{
+        margin-top: -36px;
+        padding-left: 0px !important;
+        .v-input{
+            margin-top: 0px;
+            label{
+                margin-bottom: 0px;
+            }
         }
     }
 }

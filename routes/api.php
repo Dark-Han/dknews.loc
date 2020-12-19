@@ -19,6 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('v1/categories','Api\V1\CategoryController');
+
+Route::put('v1/news/image','Api\V1\NewsController@uploadImage');
+Route::delete('v1/news/image','Api\V1\NewsController@deleteImage');
 Route::apiResource('v1/news','Api\V1\NewsController');
+
 Route::apiResource('v1/links','Api\V1\LinkController');
 Route::apiResource('v1/newspapers','Api\V1\NewspaperController');
+Route::apiResource('v1/dispositions','Api\V1\DispositionController');
+Route::apiResource('v1/limits','Api\V1\LimitController');

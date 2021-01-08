@@ -30,3 +30,10 @@ Route::get('v1/dispositions','Api\V1\DispositionController@index');
 Route::get('v1/limits','Api\V1\LimitController@index');
 Route::apiResource('v1/journals','Api\V1\JournalController');
 Route::get('v1/journal_types','Api\V1\JournalTypeController@index');
+Route::apiResource('v1/banners_web','Api\V1\BannerWebController');
+
+Route::namespace('Api\V1')->prefix('v1/banners')->group(function () {
+    Route::get('dispositions', 'BannerDispositionController@index');
+    Route::get('limits', 'BannerLimitController@index');
+    Route::get('serial_numbers', 'BannerSerialNumberController@index');
+});

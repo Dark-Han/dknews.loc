@@ -8,6 +8,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\Api\CategoryService;
 use App\Services\Api\NewsService;
 use App\Services\Api\JournalService;
+use App\Services\Api\BannerWebService;
+
 use App\Services\Api\ImageHandlers\SimpleImageHandlerService;
 
 class DependencyInjectionServiceProvider extends ServiceProvider
@@ -22,6 +24,7 @@ class DependencyInjectionServiceProvider extends ServiceProvider
         $this->registerNewspaperService();
         $this->registerNewsService();
         $this->registerJournalService();
+        $this->registerBannerWebService();
     }
 
     private function registerCategoryService(){
@@ -51,6 +54,14 @@ class DependencyInjectionServiceProvider extends ServiceProvider
     private function registerJournalService(){
         $this->app->singleton(JournalService::class, function ($app) {
             return new JournalService(
+                new SimpleImageHandlerService()
+            );
+        });
+    }
+
+    private function registerBannerWebService(){
+        $this->app->singleton(BannerWebService::class, function ($app) {
+            return new BannerWebService(
                 new SimpleImageHandlerService()
             );
         });

@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Api\V1;
 
-use App\Http\Resources\Api\V1\DispositionResource;
-use App\Http\Resources\Api\V1\LimitResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

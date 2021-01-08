@@ -3,10 +3,19 @@
 namespace App\Contracts;
 
 interface iImageHandler {
-    
-    public function put($folder,$image):string;
+
+    /**
+     * @param $folder
+     * @param $image
+     * @return string
+     */
+    public function put($folder, $image):string;
+
+    /**
+     * @param $path
+     */
     public function delete($path):void;
-    
+
 }
 
 ?>

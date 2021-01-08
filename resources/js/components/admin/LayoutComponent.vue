@@ -18,6 +18,9 @@
             <v-list-item to="/admin/journals">
                 <v-list-item-content>Журналы</v-list-item-content>
             </v-list-item>
+            <v-list-item to="/admin/banners_web">
+                <v-list-item-content>Баннеры (веб)</v-list-item-content>
+            </v-list-item>
         </v-list>
       </v-navigation-drawer>
 

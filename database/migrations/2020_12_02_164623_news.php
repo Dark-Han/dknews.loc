@@ -11,6 +11,7 @@ class News extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->string('slug');
             $table->unsignedSmallInteger('category_id');
             $table->text('text');
             $table->unsignedSmallInteger('disposition_id');

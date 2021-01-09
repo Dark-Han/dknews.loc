@@ -28,7 +28,8 @@ class NewsResource extends JsonResource
             'seen' => $this->seen,
             'must_seen' => $this->must_seen,
             'limit' => new LimitResource($this->whenLoaded('limit')),
-            'forever' => $this->forever,
+            'foreverStr' => $this->forever?'Да':'Нет',
+            'forever'=>$this->forever,
             'cover' => $this->cover
         ];
     }

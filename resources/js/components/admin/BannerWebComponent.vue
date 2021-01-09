@@ -348,7 +348,7 @@
                         console.log(error);
                     });
             },
-            async setLimits(){
+            setLimits(){
                 console.log(222);
                 axios
                     .get("/api/v1/banners/limits")
@@ -359,7 +359,7 @@
                     .catch(function (error) {
                     });
             },
-            async setDispositions(){
+            setDispositions(){
                 console.log(111);
                 axios
                     .get("/api/v1/banners/dispositions")
@@ -370,7 +370,7 @@
                     .catch(function (error) {
                     });
             },
-            async setSerialNumbers(){
+            setSerialNumbers(){
                 console.log(333);
                 axios
                     .get("/api/v1/banners/serial_numbers")

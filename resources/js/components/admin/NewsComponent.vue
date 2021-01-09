@@ -118,29 +118,37 @@
                                                 </v-col>
 
                                                 <div v-show="!editedItem.forever">
-                                                    <p class="radioBtnTitle primary--text">Тип лимита</p>
-                                                    <v-radio-group v-model="editedItem.limit_id">
-                                                        <v-row>
-                                                            <v-col
-                                                                v-for="(limit,i) in limits"
-                                                                :key="i">
-                                                                <v-radio
-                                                                    :label="limit.name"
-                                                                    color="success"
-                                                                    hide-details
-                                                                    class="checkboxBtn"
-                                                                    :value="limit.id"
-                                                                ></v-radio>
-                                                            </v-col>
-                                                        </v-row>
-
-                                                    </v-radio-group>
-
+                                                    <div v-show="showLimitList">
+                                                        <p class="radioBtnTitle primary--text">Тип лимита</p>
+                                                        <v-radio-group v-model="editedItem.limit_id">
+                                                            <v-row>
+                                                                <v-col
+                                                                    v-for="(limit,i) in limits"
+                                                                    :key="i">
+                                                                    <v-radio
+                                                                        :label="limit.name"
+                                                                        color="success"
+                                                                        hide-details
+                                                                        class="checkboxBtn"
+                                                                        :value="limit.id"
+                                                                    ></v-radio>
+                                                                </v-col>
+                                                            </v-row>
+                                                        </v-radio-group>
+                                                    </div>
+                                                    <v-text-field
+                                                        v-show="showLimit"
+                                                        v-model="editedItem.must_seen"
+                                                        label="Лимит"
+                                                        type="number"
+                                                        min="0"
+                                                    ></v-text-field>
                                                     <timestamp-component
                                                         :currentDate="editedItem.timestampSt"
                                                         :editedIndex="editedIndex"
                                                         @onSetTimestamp="setTimestamp('timestampSt',$event)"></timestamp-component>
                                                     <timestamp-component
+                                                        v-show="showDateEn"
                                                         :currentDate="editedItem.timestampEn"
                                                         :editedIndex="editedIndex"
                                                         @onSetTimestamp="setTimestamp('timestampEn',$event)"></timestamp-component>
@@ -229,6 +237,9 @@
         },
         data: () => ({
             editor: null,
+            showLimit:false,
+            showLimitList:false,
+            showDateEn:true,
             categories: [],
             dispositions: [],
             limits: [],
@@ -238,7 +249,7 @@
                 {text: "Категория", value: "category.name", sortable: false},
                 {text: "Расположение", value: "disposition.name", sortable: false},
                 {text: "Тип лимита", value: "limit.name", sortable: false},
-                {text: "На вечно", value: "forever", sortable: false},
+                {text: "На вечно", value: "foreverStr", sortable: false},
                 {text: "Дата начала", value: "date_st", sortable: false},
                 {text: "Дата конца", value: "date_en", sortable: false},
                 {text: "Просмотрено", value: "seen", sortable: false},
@@ -255,6 +266,7 @@
                 seen: 0,
                 must_seen: 0,
                 limit_id: 1,
+                limit:0,
                 forever: false,
                 cover: null,
                 uploadedImages: []
@@ -269,6 +281,7 @@
                 seen: 0,
                 must_seen: 0,
                 limit_id: 1,
+                limit:0,
                 forever: false,
                 cover: null,
                 uploadedImages: []
@@ -287,10 +300,31 @@
             },
             'editedItem.date_en': function (val) {
                 this.dateEnFormatted = this.formatDate(val);
+            },
+            'editedItem.disposition_id':function (val) {
+                if(val===1){
+                    this.showLimit=false;
+                    this.showLimitList=false;
+                    this.showDateEn=true;
+                }else{
+                    this.showLimitList=true;
+                }
+            },
+            'editedItem.limit_id':function (val) {
+                if(val===2){
+                    this.showDateEn=false;
+                }else{
+                    this.showDateEn=true;
+                }
+                if (val===1){
+                    this.showLimit=false;
+                }else{
+                    this.showLimit=true;
+                }
             }
         },
         methods: {
-            async index() {
+             index() {
                 axios
                     .get('/api/v1/news')
                     .then((response) => {
@@ -300,7 +334,7 @@
                     .catch(function (error) {
                     });
             },
-            async getCategories() {
+            getCategories() {
                 axios.get('/api/v1/categories')
                     .then((response) => {
                         this.categories = response.data.data;
@@ -309,7 +343,7 @@
                         console.log(error);
                     });
             },
-            async getDispositions() {
+            getDispositions() {
                 axios.get('/api/v1/dispositions')
                     .then((response) => {
                         this.dispositions = response.data.dispositions;
@@ -318,7 +352,7 @@
                         console.log(error);
                     });
             },
-            async getLimits() {
+            getLimits() {
                 axios.get('/api/v1/limits')
                     .then((response) => {
                         this.limits = response.data.limits;

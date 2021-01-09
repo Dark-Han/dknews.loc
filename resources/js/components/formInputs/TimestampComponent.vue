@@ -110,7 +110,12 @@
             },
             setDefaultTime(){
                 var date=new Date();
-                this.timestamp.time=date.getHours()+':'+(date.getMinutes()<10?'0':'') + date.getMinutes();
+                this.timestamp.time=(date.getHours()===0?'00':date.getHours())
+                                    +':'
+                                    +
+                                    (date.getMinutes()<10?'0':'')
+                                    +
+                                    date.getMinutes();
             },
             setCurrentDate(){
                 let date=new Date(this.currentDate.date);
@@ -119,7 +124,12 @@
             },
             setCurrentTime(){
                 var date=new Date(this.currentDate.date);
-                this.timestamp.time=date.getHours()+':'+(date.getMinutes()<10?'0':'') + date.getMinutes();
+                this.timestamp.time=(date.getHours()===0?'00':date.getHours())
+                    +':'
+                    +
+                    (date.getMinutes()<10?'0':'')
+                    +
+                    date.getMinutes();
             }
         }
     }

@@ -12,15 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Disposition::class, 5)->create();
-        factory(App\Models\Limit::class, 5)->create();
         factory(App\Models\JournalType::class,2)->create();
-
         //seeders
         $this->call([
             BannerDispositionsSeeder::class,
             BannerLimitsSeeder::class,
-            BannerSerialNumbersSeeder::class
+            BannerSerialNumbersSeeder::class,
+            DispositionSeeder::class,
+            LimitSeeder::class
         ]);
     }
 }

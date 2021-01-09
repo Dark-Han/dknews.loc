@@ -24,6 +24,8 @@ class BannerWebResource extends JsonResource
             'serial_number_id'=>$this->serial_number_id,
             'limit' => new BannerLimitResource($this->whenLoaded('limit')),
             'limit_id'=>$this->limit_id,
+            'category'=> new CategoryResource($this->whenLoaded('category')),
+            'category_id'=>$this->category_id,
             'date_st' => $this->date_st,
             'date_st_string'=>Date::parse($this->date_st)->format('j F Y г.'),
             'date_en' => $this->date_en,

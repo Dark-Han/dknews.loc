@@ -71,12 +71,23 @@
                                                     :rules="requiredList('Рассположение')"
                                                 ></v-autocomplete>
                                                 <v-autocomplete
+                                                    v-show="editedItem.disposition_id<3"
                                                     v-model="editedItem.serial_number_id"
                                                     item-value="id"
                                                     item-text="name"
                                                     :items="serialNumbers"
                                                     label="Порядковый номер"
                                                     :rules="requiredList('Порядковый номер')"
+                                                ></v-autocomplete>
+                                                <v-autocomplete
+                                                    v-show="editedItem.disposition_id===3"
+                                                    v-model="editedItem.category_id"
+                                                    item-value="id"
+                                                    item-text="name"
+                                                    :items="categories"
+                                                    label="Категория"
+                                                    :rules="editedItem.disposition_id===3?requiredList('Категория')
+                                                            :[]"
                                                 ></v-autocomplete>
                                                 <v-autocomplete
                                                     v-model="editedItem.limit_id"
@@ -231,11 +242,13 @@
             dispositions:[],
             limits:[],
             serialNumbers:[],
+            categories:[],
             headers: [
                 {text: "Действия", value: "actions", sortable: false,width:20},
                 {text: "Название", value: "name", sortable: false},
                 { text: "Ссылка", value: "link", sortable: false },
                 { text: "Расположение", value: "disposition.name", sortable: false },
+                { text: "Категория", value: "category.name", sortable: false },
                 { text: "Порядковый номер", value: "serialNumber.name", sortable: false },
                 { text: "Тип лимита", value: "limit.name", sortable: false },
                 { text: "Дата начала", value: "date_st_string", sortable: false },
@@ -249,6 +262,7 @@
                 disposition_id: 1,
                 serial_number_id: 1,
                 limit_id: 1,
+                category_id:0,
                 date_st: new Date().toISOString().substr(0, 10),
                 date_en: new Date().toISOString().substr(0, 10)
             },
@@ -259,6 +273,7 @@
                 disposition_id: 1,
                 serial_number_id: 1,
                 limit_id: 1,
+                category_id:0,
                 date_st: new Date().toISOString().substr(0, 10),
                 date_en: new Date().toISOString().substr(0, 10)
             },
@@ -268,6 +283,7 @@
             this.setDispositions();
             this.setLimits();
             this.setSerialNumbers();
+            this.setCategory();
             this.dateFormattedSt=this.formatDate(this.editedItem.date_st);
             this.dateFormattedEn=this.formatDate(this.editedItem.date_en);
         },
@@ -349,7 +365,6 @@
                     });
             },
             setLimits(){
-                console.log(222);
                 axios
                     .get("/api/v1/banners/limits")
                     .then((response) => {
@@ -360,7 +375,6 @@
                     });
             },
             setDispositions(){
-                console.log(111);
                 axios
                     .get("/api/v1/banners/dispositions")
                     .then((response) => {
@@ -371,11 +385,20 @@
                     });
             },
             setSerialNumbers(){
-                console.log(333);
                 axios
                     .get("/api/v1/banners/serial_numbers")
                     .then((response) => {
                         this.serialNumbers = response.data.serialNumbers;
+                        this.skeleton = false;
+                    })
+                    .catch(function (error) {
+                    });
+            },
+            setCategory(){
+                axios
+                    .get("/api/v1/categories")
+                    .then((response) => {
+                        this.categories = response.data.data;
                         this.skeleton = false;
                     })
                     .catch(function (error) {

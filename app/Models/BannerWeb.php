@@ -11,6 +11,10 @@ class BannerWeb extends Model
 
     protected $guarded=[];
 
+    public function category(){
+        return $this->belongsTo('App\Models\Category');
+    }
+
     public function disposition(){
         return $this->belongsTo('App\Models\BannerDisposition','disposition_id');
     }

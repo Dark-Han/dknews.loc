@@ -36,13 +36,14 @@ class BannerWebService
                 'serial_number_id'=>$data['serial_number_id'],
                 'disposition_id'=>$data['disposition_id'],
                 'limit_id'=>$data['limit_id'],
+                'category_id' => $data['category_id'],
                 'date_st'=>$data['date_st'],
                 'date_en'=>$data['date_en'],
                 'cover' => $this->imageHandler->put('/bannerWeb',$data['cover'])
         ]
         );
 
-        return $banner->load('disposition','limit','serial_number');
+        return $banner->load('disposition','limit','serial_number','category');
     }
 
     /**
@@ -61,11 +62,12 @@ class BannerWebService
         $banner->serial_number_id=$data['serial_number_id'];
         $banner->disposition_id=$data['disposition_id'];
         $banner->limit_id=$data['limit_id'];
+        $banner->category_id=$data['category_id'];
         $banner->date_st=$data['date_st'];
         $banner->date_en=$data['date_en'];
         $banner->cover=$data['cover'];
         $banner->save();
-        return $banner->load('disposition','limit','serial_number');
+        return $banner->load('disposition','limit','serial_number','category');
     }
 
     /**

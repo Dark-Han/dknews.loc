@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Jenssegers\Date\Date;
 
 /**
  * Class NewsResource
@@ -24,7 +25,9 @@ class NewsResource extends JsonResource
             'text' => $this->text,
             'disposition' => new DispositionResource($this->whenLoaded('disposition')),
             'date_st' => $this->date_st,
+            'date_st_str'=>Date::parse($this->date_st)->format('j F Y (H:i)'),
             'date_en' => $this->date_en,
+            'date_en_str'=>Date::parse($this->date_en)->format('j F Y (H:i)'),
             'seen' => $this->seen,
             'must_seen' => $this->must_seen,
             'limit' => new LimitResource($this->whenLoaded('limit')),

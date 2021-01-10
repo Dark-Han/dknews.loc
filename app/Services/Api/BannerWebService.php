@@ -36,6 +36,7 @@ class BannerWebService
                 'serial_number_id'=>$data['serial_number_id'],
                 'disposition_id'=>$data['disposition_id'],
                 'limit_id'=>$data['limit_id'],
+                'must_seen' => $data['must_seen'],
                 'category_id' => $data['category_id'],
                 'date_st'=>$data['date_st'],
                 'date_en'=>$data['date_en'],
@@ -62,6 +63,7 @@ class BannerWebService
         $banner->serial_number_id=$data['serial_number_id'];
         $banner->disposition_id=$data['disposition_id'];
         $banner->limit_id=$data['limit_id'];
+        $banner->must_seen=$data['must_seen'];
         $banner->category_id=$data['category_id'];
         $banner->date_st=$data['date_st'];
         $banner->date_en=$data['date_en'];

@@ -16,7 +16,7 @@ class BannerWebController extends Controller
 
     public function index()
     {
-        $bannerWeb=BannerWeb::with('limit','disposition','serial_number')->get();
+        $bannerWeb=BannerWeb::with('limit','disposition','serial_number','category')->get();
         return BannerWebResource::collection($bannerWeb);
     }
 

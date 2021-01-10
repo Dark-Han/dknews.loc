@@ -99,6 +99,13 @@
                                                 ></v-autocomplete>
                                             </v-col>
                                             <v-col cols="6">
+                                                <v-text-field
+                                                    v-show="editedItem.limit_id!==1"
+                                                    v-model="editedItem.must_seen"
+                                                    label="Лимит"
+                                                    type="number"
+                                                    min="0"
+                                                ></v-text-field>
                                                 <v-menu
                                                     v-model="dateMenuSt"
                                                     :close-on-content-click="false"
@@ -124,30 +131,32 @@
                                                     ></v-date-picker>
                                                 </v-menu>
 
-                                                <v-menu
-                                                    v-model="dateMenuEn"
-                                                    :close-on-content-click="false"
-                                                    :nudge-right="40"
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    min-width="290px"
-                                                >
-                                                    <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field
-                                                            v-model="dateFormattedEn"
-                                                            label="Дата конец"
-                                                            prepend-icon="mdi-calendar"
-                                                            readonly
-                                                            v-bind="attrs"
-                                                            v-on="on"
-                                                        ></v-text-field>
-                                                    </template>
-                                                    <v-date-picker
-                                                        v-model="editedItem.date_en"
-                                                        locale="ru"
-                                                        @input="dateMenuEn = false"
-                                                    ></v-date-picker>
-                                                </v-menu>
+                                                <div v-show="editedItem.limit_id!==2">
+                                                    <v-menu
+                                                        v-model="dateMenuEn"
+                                                        :close-on-content-click="false"
+                                                        :nudge-right="40"
+                                                        transition="scale-transition"
+                                                        offset-y
+                                                        min-width="290px"
+                                                    >
+                                                        <template v-slot:activator="{ on, attrs }">
+                                                            <v-text-field
+                                                                v-model="dateFormattedEn"
+                                                                label="Дата конец"
+                                                                prepend-icon="mdi-calendar"
+                                                                readonly
+                                                                v-bind="attrs"
+                                                                v-on="on"
+                                                            ></v-text-field>
+                                                        </template>
+                                                        <v-date-picker
+                                                            v-model="editedItem.date_en"
+                                                            locale="ru"
+                                                            @input="dateMenuEn = false"
+                                                        ></v-date-picker>
+                                                    </v-menu>
+                                                </div>
 
                                                 <v-file-input
                                                     accept="image/*"
@@ -246,13 +255,15 @@
             headers: [
                 {text: "Действия", value: "actions", sortable: false,width:20},
                 {text: "Название", value: "name", sortable: false},
+                {text: "Просмотрено", value: "seen", sortable: false},
                 { text: "Ссылка", value: "link", sortable: false },
                 { text: "Расположение", value: "disposition.name", sortable: false },
                 { text: "Категория", value: "category.name", sortable: false },
                 { text: "Порядковый номер", value: "serialNumber.name", sortable: false },
                 { text: "Тип лимита", value: "limit.name", sortable: false },
                 { text: "Дата начала", value: "date_st_string", sortable: false },
-                { text: "Дата конец", value: "date_en_string", sortable: false }
+                {text: "Дата конец", value: "date_en_string", sortable: false},
+                {text: "Лимит просмотров", value: "must_seen", sortable: false},
             ],
             coverUrl: '',
             editedItem: {
@@ -262,6 +273,7 @@
                 disposition_id: 1,
                 serial_number_id: 1,
                 limit_id: 1,
+                must_seen: 0,
                 category_id:0,
                 date_st: new Date().toISOString().substr(0, 10),
                 date_en: new Date().toISOString().substr(0, 10)
@@ -273,6 +285,7 @@
                 disposition_id: 1,
                 serial_number_id: 1,
                 limit_id: 1,
+                must_seen: 0,
                 category_id:0,
                 date_st: new Date().toISOString().substr(0, 10),
                 date_en: new Date().toISOString().substr(0, 10)

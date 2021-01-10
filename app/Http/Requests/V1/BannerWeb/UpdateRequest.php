@@ -14,6 +14,7 @@ class UpdateRequest extends FormRequest
             'disposition_id'=>'required|integer',
             'serial_number_id'=>'required|integer',
             'limit_id'=>'required|integer',
+            'must_seen'=>'required|integer',
             'category_id'=>'required|integer',
             'date_st'=>'date_format:Y-m-d',
             'date_en'=>'date_format:Y-m-d',

@@ -31,6 +31,7 @@ Route::get('v1/limits','Api\V1\LimitController@index');
 Route::apiResource('v1/journals','Api\V1\JournalController');
 Route::get('v1/journal_types','Api\V1\JournalTypeController@index');
 Route::apiResource('v1/banners_web','Api\V1\BannerWebController');
+Route::apiResource('v1/medias','Api\V1\MediaController');
 
 Route::namespace('Api\V1')->prefix('v1/banners')->group(function () {
     Route::get('dispositions', 'BannerDispositionController@index');

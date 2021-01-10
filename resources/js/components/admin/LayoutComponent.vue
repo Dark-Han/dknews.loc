@@ -21,6 +21,9 @@
             <v-list-item to="/admin/banners_web">
                 <v-list-item-content>Баннеры (веб)</v-list-item-content>
             </v-list-item>
+            <v-list-item to="/admin/medias">
+                <v-list-item-content>Медиа</v-list-item-content>
+            </v-list-item>
         </v-list>
       </v-navigation-drawer>
 

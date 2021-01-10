@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Api\MediaService;
 use App\Services\Api\NewspaperService;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,7 @@ class DependencyInjectionServiceProvider extends ServiceProvider
         $this->registerNewsService();
         $this->registerJournalService();
         $this->registerBannerWebService();
+        $this->registerMediaService();
     }
 
     private function registerCategoryService(){
@@ -62,6 +64,14 @@ class DependencyInjectionServiceProvider extends ServiceProvider
     private function registerBannerWebService(){
         $this->app->singleton(BannerWebService::class, function ($app) {
             return new BannerWebService(
+                new SimpleImageHandlerService()
+            );
+        });
+    }
+
+    private function registerMediaService(){
+        $this->app->singleton(MediaService::class, function ($app) {
+            return new MediaService(
                 new SimpleImageHandlerService()
             );
         });

@@ -36,6 +36,10 @@ const router = new VueRouter({
           path: "/admin/banners_web",
           component: require("./components/admin/BannerWebComponent.vue").default,
       },
+      {
+          path: "/admin/medias",
+          component: require("./components/admin/MediaComponent.vue").default,
+      },
   ],
 });
 

@@ -369,8 +369,9 @@
                 if (validate) {
                     axios.post('/api/v1/news', this.editedItem)
                         .then((response) => {
+                            this.showSnack("success", "Данные успешно добавлены!");
                             this.data.unshift(response.data.data);
-                        this.close();
+                            this.close();
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -389,11 +390,12 @@
                 axios
                     .put('/api/v1/news/' + this.editedItem.id, this.editedItem)
                     .then((response) => {
+                        this.showSnack("success", "Данные успешно изменены!");
                         Object.assign(this.data[this.editedIndex], response.data.data);
                         this.close();
                     })
-                    .catch(function (error) {
-                        console.log(error);
+                    .catch((error)=>{
+                        this.showSnack("error", "Ошибка при изменении данных!");
                     });
             },
             deleteItem() {

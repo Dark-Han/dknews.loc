@@ -89,6 +89,7 @@
                 if(val>-1){
                     this.setCurrentDate();
                     this.setCurrentTime();
+                    this.setTimestamp();
                 }else{
                     this.setDefaultDate();
                     this.setDefaultTime();
@@ -111,11 +112,9 @@
             setDefaultTime(){
                 var date=new Date();
                 this.timestamp.time=(date.getHours()===0?'00':date.getHours())
-                                    +':'
-                                    +
-                                    (date.getMinutes()<10?'0':'')
-                                    +
-                                    date.getMinutes();
+                    +':'
+                    +(date.getMinutes()<10?'0':'')
+                    +date.getMinutes();
             },
             setCurrentDate(){
                 let date=new Date(this.currentDate.date);
@@ -123,13 +122,11 @@
                 this.timestamp.date=date.toISOString().substr(0, 10);
             },
             setCurrentTime(){
-                var date=new Date(this.currentDate.date);
+                let date=new Date(this.currentDate.date);
                 this.timestamp.time=(date.getHours()===0?'00':date.getHours())
                     +':'
-                    +
-                    (date.getMinutes()<10?'0':'')
-                    +
-                    date.getMinutes();
+                    +(date.getMinutes()<10?'0':'')
+                    +date.getMinutes();
             }
         }
     }

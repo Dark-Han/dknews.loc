@@ -167,13 +167,36 @@
                                                 </div>
                                             </v-col>
                                             <v-col cols="8" id="editor">
-                                                <editor-component
-                                                    :api-key="tinymceApiKey"
-                                                    :init='tinymceInit'
-                                                    v-model="editedItem.text[lng]"
-                                                    @onInit="editorLoad"
-                                                    v-if="editorActivated"
-                                                />
+                                                <div v-show="richTextEditors.ru.show">
+                                                    <editor-component
+                                                            :api-key="tinymceApiKey"
+                                                            :init='tinymceInit'
+                                                            v-model="editedItem.text.ru"
+                                                            id="ru"
+                                                            @onInit="editorLoad"
+                                                            v-if="richTextEditors.ru.activated"
+                                                    />
+                                                </div>
+                                                <div v-show="richTextEditors.kz.show">
+                                                    <editor-component
+                                                            :api-key="tinymceApiKey"
+                                                            :init='tinymceInit'
+                                                            v-model="editedItem.text.kz"
+                                                            id="kz"
+                                                            @onInit="editorLoad"
+                                                            v-if="richTextEditors.kz.activated"
+                                                    />
+                                                </div>
+                                                <div v-show="richTextEditors.en.show">
+                                                    <editor-component
+                                                            :api-key="tinymceApiKey"
+                                                            :init='tinymceInit'
+                                                            v-model="editedItem.text.en"
+                                                            id="en"
+                                                            @onInit="editorLoad"
+                                                            v-if="richTextEditors.en.activated"
+                                                    />
+                                                </div>
                                             </v-col>
                                         </v-row>
                                     </v-form>
@@ -249,8 +272,23 @@
             'timestamp-component': Timestamp
         },
         data: () => ({
-            editor: null,
-            editorText:'',
+            richTextEditors: {
+                ru:{
+                    activated:false,
+                    show:false,
+                    editor:null
+                },
+                kz:{
+                    activated:false,
+                    show:false,
+                    editor:null,
+                },
+                en:{
+                    activated:false,
+                    show:false,
+                    editor:null
+                }
+            },
             lng:'ru',
             editorActivated:false,
             showLimit:false,
@@ -272,7 +310,6 @@
                 {text: "Лимит", value: "must_seen", sortable: false},
             ],
             coverUrl: '',
-            languages:[{}],
             editedItem: {
                 title: {
                     ru:'',
@@ -328,8 +365,8 @@
             this.setTinymceImageUploaderConfig();
         },
         mounted(){
-            this.activateEditor();
-            this.editorText=this.editedItem.text.ru;
+            this.activateEditors();
+            this.showDefaultEditor();
         },
         watch: {
             'editedItem.date_st': function (val) {
@@ -359,11 +396,19 @@
                     this.showLimit=true;
                 }
             },
-            'editedItem.text.ru':function (val) {
-                console.log(val);
+            dialog(opened){
+                if(!opened){
+                    this.lng='ru';
+                }
             },
             lng(val){
-                console.log(val);
+                for (let i in this.richTextEditors){
+                    if(val===i){
+                        this.richTextEditors[i].show=true;
+                    }else{
+                        this.richTextEditors[i].show=false;
+                    }
+                }
             }
         },
         methods: {
@@ -405,7 +450,8 @@
                     });
             },
             editorLoad($event, editor) {
-                this.editor = editor;
+                let lng=editor.id;
+                this.richTextEditors[lng].editor = editor;
             },
             store() {
                 var validate = this.$refs.form.validate();
@@ -500,13 +546,11 @@
                     let cover = editor.querySelector('#cover');
                     //Если обложка существует то заменяем её
                     if (cover !== null) {
-                        this.editor.dom.setAttribs(this.editor.dom.select('#cover'), {'src': '/storage/' + path});
-                        this.editedItem.text = this.editor.getContent();
+                        this.updateCoverForAllLngEditors();
                     }
                     //Если не существует создаём новую
                     else {
-                        this.editor.execCommand('mceInsertContent', false, '</br>' +
-                            '<img src="/storage/' + path + '" id="cover"></img>');
+                        this.setCoverForAllLngEditors();
                     }
                 })
                     .catch(function (error) {
@@ -549,8 +593,30 @@
                         console.log(error);
                     });
             },
-            activateEditor(){
-                this.editorActivated=true;
+            activateEditors(){
+                for(let i in this.richTextEditors){
+                    this.richTextEditors[i].activated=true;
+                }
+            },
+            showDefaultEditor(){
+              this.richTextEditors[this.lng].show=true;
+            },
+            setCoverForAllLngEditors(){
+                for(let lng in this.richTextEditors){
+                    let newCoverPath=this.editedItem.cover;
+                    this.richTextEditors[lng].editor.execCommand('mceInsertContent', false, '</br>' +
+                        '<img src="/storage/' + newCoverPath + '" id="cover" height="250px" width="350px"></img>');
+                    // this.editedItem.text[lng] = this.editor.getContent();
+                }
+            },
+            updateCoverForAllLngEditors(){
+                for(let lng in this.richTextEditors){
+                    let updatedCoverPath=this.editedItem.cover;
+                    let editor=this.richTextEditors[lng].editor;
+                    editor.dom.setAttribs(
+                        editor.dom.select('#cover'), {'src': '/storage/' + updatedCoverPath}
+                    );
+                }
             }
         },
     };

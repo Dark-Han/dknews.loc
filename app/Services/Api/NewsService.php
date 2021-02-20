@@ -32,8 +32,12 @@ class NewsService
     public function create(array $data): News
     {
         $news = News::create([
-            'title' => $data['title'],
-            'text' => $data['text'],
+            'title_ru' => $data['title']['ru'],
+            'title_kz' => $data['title']['kz'],
+            'title_en' => $data['title']['en'],
+            'text_ru' => $data['text']['ru'],
+            'text_kz' => $data['text']['kz'],
+            'text_en' => $data['text']['en'],
             'disposition_id' => $data['disposition_id'],
             'limit_id' => $data['limit_id'],
             'seen' => $data['seen'],
@@ -51,8 +55,12 @@ class NewsService
     public function update(array $data, int $id): News
     {
         $news = News::find($id);
-        $news->title = $data['title'];
-        $news->text = $data['text'];
+        $news->title_ru = $data['title']['ru'];
+        $news->title_kz =  $data['title']['kz'];
+        $news->title_en = $data['title']['en'];
+        $news->text_ru = $data['text']['ru'];
+        $news->text_kz = $data['text']['kz'];
+        $news->text_en = $data['text']['en'];
         $news->disposition_id = $data['disposition_id'];
         $news->limit_id = $data['limit_id'];
         $news->seen = $data['seen'];

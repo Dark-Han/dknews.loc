@@ -261,7 +261,7 @@
             limits: [],
             headers: [
                 {text: "Действия", value: "actions", sortable: false, width: 20},
-                {text: "Заголовок", value: "title", sortable: false},
+                {text: "Заголовок", value: "title.ru", sortable: false},
                 {text: "Категория", value: "category.name", sortable: false},
                 {text: "Расположение", value: "disposition.name", sortable: false},
                 {text: "Тип лимита", value: "limit.name", sortable: false},

@@ -142,6 +142,22 @@
         float: right !important;
         margin-top: -16px !important;
     }
+
+  .success{
+    .lngTabs{
+      .v-slide-group__wrapper {
+        background-color: #4caf50 !important;
+      }
+    }
+  }
+
+  .warning{
+    .lngTabs{
+      .v-slide-group__wrapper {
+        background-color: #fb8c00 !important;
+      }
+    }
+  }
 }
 
 /* width */

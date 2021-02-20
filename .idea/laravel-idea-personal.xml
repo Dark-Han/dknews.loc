@@ -3,6 +3,7 @@
   <component name="LaravelIdeaPersonalSettings">
     <option name="generationOptionValues">
       <map>
+        <entry key="createController.singleAction" value="true" />
         <entry key="createResourceController.apiOnly" value="true" />
       </map>
     </option>

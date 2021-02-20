@@ -50,7 +50,19 @@
                                 >
                                     <v-icon>mdi-close</v-icon>
                                 </v-btn>
-                                <v-toolbar-title style="color: white">{{formTitle}}</v-toolbar-title>
+                                <v-col><v-toolbar-title style="color: white">{{formTitle}}</v-toolbar-title></v-col>
+                                <v-col>
+                                    <v-tabs
+                                            class="lngTabs"
+                                            center-active
+                                            dark
+                                            v-model="lng"
+                                    >
+                                        <v-tab href="#ru">РУ</v-tab>
+                                        <v-tab href="#kz">КЗ</v-tab>
+                                        <v-tab href="#en">EN</v-tab>
+                                    </v-tabs>
+                                </v-col>
                                 <v-spacer></v-spacer>
                                 <v-toolbar-items>
                                     <v-btn
@@ -71,7 +83,7 @@
                                         <v-row>
                                             <v-col cols="4">
                                                 <v-text-field
-                                                    v-model="editedItem.title"
+                                                    v-model="editedItem.title[lng]"
                                                     label="Название"
                                                     :rules="requiredText('Название')"
                                                 ></v-text-field>
@@ -156,10 +168,11 @@
                                             </v-col>
                                             <v-col cols="8" id="editor">
                                                 <editor-component
-                                                    api-key="tinymceApiKey"
+                                                    :api-key="tinymceApiKey"
                                                     :init='tinymceInit'
-                                                    v-model="editedItem.text"
-                                                    v-on:onInit="editorLoad"
+                                                    v-model="editedItem.text[lng]"
+                                                    @onInit="editorLoad"
+                                                    v-if="editorActivated"
                                                 />
                                             </v-col>
                                         </v-row>
@@ -237,6 +250,9 @@
         },
         data: () => ({
             editor: null,
+            editorText:'',
+            lng:'ru',
+            editorActivated:false,
             showLimit:false,
             showLimitList:false,
             showDateEn:true,
@@ -256,10 +272,19 @@
                 {text: "Лимит", value: "must_seen", sortable: false},
             ],
             coverUrl: '',
+            languages:[{}],
             editedItem: {
-                title: '',
+                title: {
+                    ru:'',
+                    kz:'',
+                    en:''
+                },
                 category_id: '',
-                text: '',
+                text: {
+                    ru:'',
+                    kz:'',
+                    en:''
+                },
                 disposition_id: 1,
                 timestampSt: null,
                 timestampEn: null,
@@ -272,9 +297,17 @@
                 uploadedImages: []
             },
             defaultItem: {
-                title: '',
+                title: {
+                    ru:'',
+                    kz:'',
+                    en:''
+                },
                 category_id: '',
-                text: '',
+                text: {
+                    ru:'',
+                    kz:'',
+                    en:''
+                },
                 disposition_id: 1,
                 timestampSt: null,
                 timestampEn: null,
@@ -293,6 +326,10 @@
             this.getDispositions();
             this.getLimits();
             this.setTinymceImageUploaderConfig();
+        },
+        mounted(){
+            this.activateEditor();
+            this.editorText=this.editedItem.text.ru;
         },
         watch: {
             'editedItem.date_st': function (val) {
@@ -321,10 +358,16 @@
                 }else{
                     this.showLimit=true;
                 }
+            },
+            'editedItem.text.ru':function (val) {
+                console.log(val);
+            },
+            lng(val){
+                console.log(val);
             }
         },
         methods: {
-             index() {
+            index() {
                 axios
                     .get('/api/v1/news')
                     .then((response) => {
@@ -505,6 +548,9 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            activateEditor(){
+                this.editorActivated=true;
             }
         },
     };

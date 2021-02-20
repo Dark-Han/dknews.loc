@@ -9,8 +9,12 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|string',
-            'text'=>'required|string',
+            'title.ru'=>'required|string',
+            'title.kz'=>'required|string',
+            'title.en'=>'required|string',
+            'text.ru'=>'required|string',
+            'text.kz'=>'required|string',
+            'text.en'=>'required|string',
             'category_id'=>'required|integer',
             'cover'=>'required|string',
             'disposition_id'=>'required|integer',

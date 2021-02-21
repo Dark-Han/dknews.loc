@@ -83,7 +83,7 @@
                                                     v-show="editedItem.disposition_id===3"
                                                     v-model="editedItem.category_id"
                                                     item-value="id"
-                                                    item-text="name"
+                                                    item-text="name_ru"
                                                     :items="categories"
                                                     label="Категория"
                                                     :rules="editedItem.disposition_id===3?requiredList('Категория')
@@ -258,7 +258,7 @@
                 {text: "Просмотрено", value: "seen", sortable: false},
                 { text: "Ссылка", value: "link", sortable: false },
                 { text: "Расположение", value: "disposition.name", sortable: false },
-                { text: "Категория", value: "category.name", sortable: false },
+                { text: "Категория", value: "category.name_ru", sortable: false },
                 { text: "Порядковый номер", value: "serialNumber.name", sortable: false },
                 { text: "Тип лимита", value: "limit.name", sortable: false },
                 { text: "Дата начала", value: "date_st_string", sortable: false },

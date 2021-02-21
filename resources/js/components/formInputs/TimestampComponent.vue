@@ -13,7 +13,7 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                             v-model="formattedDate"
-                            label="Дата начала"
+                            label="Дата"
                             prepend-icon="mdi-calendar"
                             readonly
                             v-bind="attrs"

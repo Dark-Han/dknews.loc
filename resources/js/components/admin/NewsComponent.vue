@@ -96,7 +96,9 @@
                                                 ></v-autocomplete>
 
                                                 <v-file-input
-                                                    accept="image/*"
+                                                        clearable="true"
+                                                        v-model="newsCover"
+                                                        accept="image/*"
                                                     label="Обложка"
                                                     @change="coverUploadhandler"
                                                     :rules="requiredImage('Обложка')"
@@ -271,6 +273,7 @@
             'timestamp-component': Timestamp
         },
         data: () => ({
+            newsCover:null,
             richTextEditors: {
                 ru:{
                     activated:false,
@@ -298,7 +301,9 @@
             limits: [],
             headers: [
                 {text: "Действия", value: "actions", sortable: false, width: 20},
-                {text: "Заголовок", value: "title.ru", sortable: false},
+                {text: "Заголовок (ru)", value: "title.ru", sortable: false},
+                {text: "Заголовок (kz)", value: "title.kz", sortable: false},
+                {text: "Заголовок (en)", value: "title.en", sortable: false},
                 {text: "Категория", value: "category.name_ru", sortable: false},
                 {text: "Расположение", value: "disposition.name", sortable: false},
                 {text: "Тип лимита", value: "limit.name", sortable: false},
@@ -579,6 +584,7 @@
                 if(this.editedItem.uploadedImages.length!==0){
                     this.deleteUploadedImagesOfNotCreatedNews();
                 }
+                this.newsCover=null;
                 this.dialog=false;
             },
             deleteUploadedImagesOfNotCreatedNews() {
@@ -605,7 +611,7 @@
                     let newCoverPath=this.editedItem.cover;
                     this.richTextEditors[lng].editor.execCommand('mceInsertContent', false, '</br>' +
                         '<img src="/storage/' + newCoverPath + '" id="cover" height="250px" width="350px"></img>');
-                    // this.editedItem.text[lng] = this.editor.getContent();
+                    this.editedItem.text[lng] = this.richTextEditors[lng].editor.getContent();
                 }
             },
             updateCoverForAllLngEditors(){
@@ -615,6 +621,7 @@
                     editor.dom.setAttribs(
                         editor.dom.select('#cover'), {'src': '/storage/' + updatedCoverPath}
                     );
+                    this.editedItem.text[lng] = this.richTextEditors[lng].editor.getContent();
                 }
             }
         },

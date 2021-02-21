@@ -85,7 +85,6 @@
                                                 <v-text-field
                                                     v-model="editedItem.title[lng]"
                                                     label="Название"
-                                                    :rules="requiredText('Название')"
                                                 ></v-text-field>
                                                 <v-autocomplete
                                                     v-model="editedItem.category_id"

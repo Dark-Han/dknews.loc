@@ -20,16 +20,9 @@ class NewsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => [
-                'ru' => $this->title_ru,
-                'kz' => $this->title_kz,
-                'en' => $this->title_en,
-            ],
-            'text' => [
-                'ru' => $this->text_ru,
-                'kz' => $this->text_kz,
-                'en' => $this->text_en
-            ],
+            'title' =>$this->title,
+            'text' => $this->text,
+            'language_id'=>$this->language_id,
             'category' => new CategoryResource($this->whenLoaded('category')),
             'disposition' => new DispositionResource($this->whenLoaded('disposition')),
             'date_st' => $this->date_st,

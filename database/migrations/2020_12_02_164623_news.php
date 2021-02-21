@@ -10,16 +10,11 @@ class News extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title_ru')->nullable();
-            $table->string('title_kz')->nullable();
-            $table->string('title_en')->nullable();
-            $table->string('slug_ru')->default('');
-            $table->string('slug_kz')->default('');
-            $table->string('slug_en')->default('');
+            $table->string('title');
+            $table->string('slug');
             $table->unsignedSmallInteger('category_id');
-            $table->text('text_ru');
-            $table->text('text_kz');
-            $table->text('text_en');
+            $table->unsignedSmallInteger('language_id');
+            $table->text('text');
             $table->unsignedSmallInteger('disposition_id');
             $table->dateTime('date_st');
             $table->dateTime('date_en');

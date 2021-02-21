@@ -28,6 +28,7 @@ Route::apiResource('v1/links','Api\V1\LinkController');
 Route::apiResource('v1/newspapers','Api\V1\NewspaperController');
 Route::get('v1/dispositions','Api\V1\DispositionController@index');
 Route::get('v1/limits','Api\V1\LimitController@index');
+Route::get('v1/languages','Api\V1\LanguageController@index');
 Route::apiResource('v1/journals','Api\V1\JournalController');
 Route::get('v1/journal_types','Api\V1\JournalTypeController@index');
 Route::apiResource('v1/banners_web','Api\V1\BannerWebController');

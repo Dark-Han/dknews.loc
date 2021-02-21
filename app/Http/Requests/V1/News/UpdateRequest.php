@@ -9,15 +9,12 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title.ru'=>'sometimes',
-            'title.kz'=>'sometimes',
-            'title.en'=>'sometimes',
-            'text.ru'=>'sometimes',
-            'text.kz'=>'sometimes',
-            'text.en'=>'sometimes',
+            'title'=>'required|string',
+            'text'=>'required|string',
             'category_id'=>'required|integer',
             'cover'=>'required|string',
             'disposition_id'=>'required|integer',
+            'language_id'=>'required|integer',
             'forever'=>'required|boolean',
             'limit_id'=>'required|integer',
             'timestampSt.date'=>'required|date_format:Y-m-d',

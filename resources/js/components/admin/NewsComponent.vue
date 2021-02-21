@@ -50,19 +50,7 @@
                                 >
                                     <v-icon>mdi-close</v-icon>
                                 </v-btn>
-                                <v-col><v-toolbar-title style="color: white">{{formTitle}}</v-toolbar-title></v-col>
-                                <v-col>
-                                    <v-tabs
-                                            class="lngTabs"
-                                            center-active
-                                            dark
-                                            v-model="lng"
-                                    >
-                                        <v-tab href="#ru">РУ</v-tab>
-                                        <v-tab href="#kz">КЗ</v-tab>
-                                        <v-tab href="#en">EN</v-tab>
-                                    </v-tabs>
-                                </v-col>
+                                    <v-toolbar-title style="color: white">{{formTitle}}</v-toolbar-title>
                                 <v-spacer></v-spacer>
                                 <v-toolbar-items>
                                     <v-btn
@@ -83,8 +71,9 @@
                                         <v-row>
                                             <v-col cols="4">
                                                 <v-text-field
-                                                    v-model="editedItem.title[lng]"
                                                     label="Название"
+                                                    :rules="requiredText('Название')"
+                                                    v-model="editedItem.title"
                                                 ></v-text-field>
                                                 <v-autocomplete
                                                     v-model="editedItem.category_id"
@@ -94,10 +83,15 @@
                                                     label="Категория"
                                                     :rules="requiredList('Категория')"
                                                 ></v-autocomplete>
-
+                                                <v-autocomplete
+                                                        v-model="editedItem.language_id"
+                                                        item-value="id"
+                                                        item-text="name"
+                                                        :items="languages"
+                                                        label="Тип языка"
+                                                        :rules="requiredList('Тип языка')"
+                                                ></v-autocomplete>
                                                 <v-file-input
-                                                        clearable="true"
-                                                        v-model="newsCover"
                                                         accept="image/*"
                                                     label="Обложка"
                                                     @change="coverUploadhandler"
@@ -168,36 +162,13 @@
                                                 </div>
                                             </v-col>
                                             <v-col cols="8" id="editor">
-                                                <div v-show="richTextEditors.ru.show">
                                                     <editor-component
                                                             :api-key="tinymceApiKey"
                                                             :init='tinymceInit'
-                                                            v-model="editedItem.text.ru"
-                                                            id="ru"
+                                                            v-model="editedItem.text"
                                                             @onInit="editorLoad"
-                                                            v-if="richTextEditors.ru.activated"
+                                                            v-if="editorActivated"
                                                     />
-                                                </div>
-                                                <div v-show="richTextEditors.kz.show">
-                                                    <editor-component
-                                                            :api-key="tinymceApiKey"
-                                                            :init='tinymceInit'
-                                                            v-model="editedItem.text.kz"
-                                                            id="kz"
-                                                            @onInit="editorLoad"
-                                                            v-if="richTextEditors.kz.activated"
-                                                    />
-                                                </div>
-                                                <div v-show="richTextEditors.en.show">
-                                                    <editor-component
-                                                            :api-key="tinymceApiKey"
-                                                            :init='tinymceInit'
-                                                            v-model="editedItem.text.en"
-                                                            id="en"
-                                                            @onInit="editorLoad"
-                                                            v-if="richTextEditors.en.activated"
-                                                    />
-                                                </div>
                                             </v-col>
                                         </v-row>
                                     </v-form>
@@ -252,7 +223,7 @@
             {{ snackbar.text }}
             <template v-slot:action="{ attrs }">
                 <v-icon @click="snackbar.show = false" color="white"
-                >mdi-close-circle-outline
+                >mdi-close-cir-outline
                 </v-icon
                 >
             </template>
@@ -273,25 +244,7 @@
             'timestamp-component': Timestamp
         },
         data: () => ({
-            newsCover:null,
-            richTextEditors: {
-                ru:{
-                    activated:false,
-                    show:false,
-                    editor:null
-                },
-                kz:{
-                    activated:false,
-                    show:false,
-                    editor:null,
-                },
-                en:{
-                    activated:false,
-                    show:false,
-                    editor:null
-                }
-            },
-            lng:'ru',
+            editor:null,
             editorActivated:false,
             showLimit:false,
             showLimitList:false,
@@ -299,11 +252,10 @@
             categories: [],
             dispositions: [],
             limits: [],
+            languages: [],
             headers: [
                 {text: "Действия", value: "actions", sortable: false, width: 20},
-                {text: "Заголовок (ru)", value: "title.ru", sortable: false},
-                {text: "Заголовок (kz)", value: "title.kz", sortable: false},
-                {text: "Заголовок (en)", value: "title.en", sortable: false},
+                {text: "Заголовок", value: "title", sortable: false},
                 {text: "Категория", value: "category.name_ru", sortable: false},
                 {text: "Расположение", value: "disposition.name", sortable: false},
                 {text: "Тип лимита", value: "limit.name", sortable: false},
@@ -315,17 +267,10 @@
             ],
             coverUrl: '',
             editedItem: {
-                title: {
-                    ru:'',
-                    kz:'',
-                    en:''
-                },
+                title:'',
                 category_id: '',
-                text: {
-                    ru:'',
-                    kz:'',
-                    en:''
-                },
+                language_id:1,
+                text:'',
                 disposition_id: 1,
                 timestampSt: null,
                 timestampEn: null,
@@ -338,17 +283,10 @@
                 uploadedImages: []
             },
             defaultItem: {
-                title: {
-                    ru:'',
-                    kz:'',
-                    en:''
-                },
+                title:'',
                 category_id: '',
-                text: {
-                    ru:'',
-                    kz:'',
-                    en:''
-                },
+                language_id:1,
+                text:'',
                 disposition_id: 1,
                 timestampSt: null,
                 timestampEn: null,
@@ -366,11 +304,11 @@
             this.getCategories();
             this.getDispositions();
             this.getLimits();
+            this.getLanguages();
             this.setTinymceImageUploaderConfig();
         },
         mounted(){
-            this.activateEditors();
-            this.showDefaultEditor();
+            this.activateEditor();
         },
         watch: {
             'editedItem.date_st': function (val) {
@@ -398,20 +336,6 @@
                     this.showLimit=false;
                 }else{
                     this.showLimit=true;
-                }
-            },
-            dialog(opened){
-                if(!opened){
-                    this.lng='ru';
-                }
-            },
-            lng(val){
-                for (let i in this.richTextEditors){
-                    if(val===i){
-                        this.richTextEditors[i].show=true;
-                    }else{
-                        this.richTextEditors[i].show=false;
-                    }
                 }
             }
         },
@@ -453,9 +377,17 @@
                         console.log(error);
                     });
             },
+            getLanguages() {
+                axios.get('/api/v1/languages')
+                    .then((response) => {
+                        this.languages = response.data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
             editorLoad($event, editor) {
-                let lng=editor.id;
-                this.richTextEditors[lng].editor = editor;
+                this.editor = editor;
             },
             store() {
                 var validate = this.$refs.form.validate();
@@ -510,6 +442,7 @@
                     title: item.title,
                     cover: item.cover,
                     disposition_id: item.disposition.id,
+                    language_id: item.language_id,
                     limit_id: item.limit.id,
                     category_id: item.category.id,
                     text: item.text,
@@ -598,32 +531,22 @@
                         console.log(error);
                     });
             },
-            activateEditors(){
-                for(let i in this.richTextEditors){
-                    this.richTextEditors[i].activated=true;
-                }
-            },
-            showDefaultEditor(){
-              this.richTextEditors[this.lng].show=true;
-            },
             setCoverForAllLngEditors(){
-                for(let lng in this.richTextEditors){
-                    let newCoverPath=this.editedItem.cover;
-                    this.richTextEditors[lng].editor.execCommand('mceInsertContent', false, '</br>' +
+                let newCoverPath=this.editedItem.cover;
+                    this.editor.execCommand('mceInsertContent', false, '</br>' +
                         '<img src="/storage/' + newCoverPath + '" id="cover" height="250px" width="350px"></img>');
-                    this.editedItem.text[lng] = this.richTextEditors[lng].editor.getContent();
-                }
+                    this.editedItem.text = this.editor.getContent();
             },
             updateCoverForAllLngEditors(){
-                for(let lng in this.richTextEditors){
-                    let updatedCoverPath=this.editedItem.cover;
-                    let editor=this.richTextEditors[lng].editor;
-                    editor.dom.setAttribs(
-                        editor.dom.select('#cover'), {'src': '/storage/' + updatedCoverPath}
-                    );
-                    this.editedItem.text[lng] = this.richTextEditors[lng].editor.getContent();
-                }
+                let updatedCoverPath=this.editedItem.cover;
+                this.editor.dom.setAttribs(
+                    this.editor.dom.select('#cover'), {'src': '/storage/' + updatedCoverPath}
+                );
+                this.editedItem.text = this.editor.getContent();
+            },
+            activateEditor(){
+                this.editorActivated=true;
             }
-        },
+        }
     };
 </script>

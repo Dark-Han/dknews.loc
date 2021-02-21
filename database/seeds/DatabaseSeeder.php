@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             BannerLimitsSeeder::class,
             BannerSerialNumbersSeeder::class,
             DispositionSeeder::class,
-            LimitSeeder::class
+            LimitSeeder::class,
+            LanguagesSeeder::class
         ]);
     }
 }

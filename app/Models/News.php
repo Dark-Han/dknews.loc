@@ -15,15 +15,9 @@ class News extends Model
     public function sluggable()
     {
         return [
-            'slug_ru' => [
-                'source' => 'title_ru'
-            ],
-            'slug_kz' => [
-                'source' => 'title_kz'
-            ],
-            'slug_en' => [
-                'source' => 'title_en'
-            ],
+            'slug' => [
+                'source' => 'title'
+            ]
         ];
     }
 

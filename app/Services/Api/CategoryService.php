@@ -15,7 +15,14 @@ class CategoryService {
 
     public function create(array $data):Category{
         $data['cover']=$this->imageHandler->put('/categories/covers',$data['cover']);
-        $category=Category::create($data);
+        $category=Category::create([
+            'name_ru' => $data['name_ru'],
+            'name_kz' => $data['name_kz'],
+            'name_en' => $data['name_en'],
+            'serial_number_web'=>$data['serial_number_web'],
+            'serial_number_mob'=>$data['serial_number_mob'],
+            'cover'=>$data['cover']
+        ]);
         return $category;
     }
 
@@ -25,7 +32,9 @@ class CategoryService {
             $data['cover']=$this->imageHandler->put('/categories/covers',$data['updatedCover']);
         }
         Category::where('id',$id)->update([
-            'name'=>$data['name'],
+            'name_ru' => $data['name_ru'],
+            'name_kz' => $data['name_kz'],
+            'name_en' => $data['name_en'],
             'serial_number_web'=>$data['serial_number_web'],
             'serial_number_mob'=>$data['serial_number_mob'],
             'cover'=>$data['cover']

@@ -22,7 +22,7 @@ class NewsService
             'disposition',
             'limit',
             'category' => function ($query) {
-                return $query->select('id', 'name');
+                return $query->select('id', 'name_ru');
             }
         ])
             ->orderBy('id', 'DESC')
@@ -82,7 +82,7 @@ class NewsService
                 'disposition',
                 'limit',
                 'category' => function ($query) {
-                    return $query->select('id', 'name');
+                    return $query->select('id', 'name_ru');
                 }
             ]
         );

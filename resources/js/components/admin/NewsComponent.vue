@@ -90,7 +90,7 @@
                                                 <v-autocomplete
                                                     v-model="editedItem.category_id"
                                                     item-value="id"
-                                                    item-text="name"
+                                                    item-text="name_ru"
                                                     :items="categories"
                                                     label="Категория"
                                                     :rules="requiredList('Категория')"
@@ -300,7 +300,7 @@
             headers: [
                 {text: "Действия", value: "actions", sortable: false, width: 20},
                 {text: "Заголовок", value: "title.ru", sortable: false},
-                {text: "Категория", value: "category.name", sortable: false},
+                {text: "Категория", value: "category.name_ru", sortable: false},
                 {text: "Расположение", value: "disposition.name", sortable: false},
                 {text: "Тип лимита", value: "limit.name", sortable: false},
                 {text: "На вечно", value: "foreverStr", sortable: false},

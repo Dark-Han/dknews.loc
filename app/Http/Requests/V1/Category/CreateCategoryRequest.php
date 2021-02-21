@@ -11,7 +11,9 @@ class CreateCategoryRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name'=>'required',
+            'name_ru'=>'required',
+            'name_kz'=>'required',
+            'name_en'=>'required',
             'serial_number_web'=>'required|integer',
             'serial_number_mob'=>'required|integer',
             'cover'=>'required|file|mimes:jpg,png,jpeg,gif,svg'

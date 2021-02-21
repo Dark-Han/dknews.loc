@@ -25,7 +25,9 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'id'=>'required|integer',
-            'name'=>'required|string',
+            'name_ru'=>'required',
+            'name_kz'=>'required',
+            'name_en'=>'required',
             'serial_number_web'=>'required|integer',
             'serial_number_mob'=>'required|integer',
             'cover'=>'required|string',

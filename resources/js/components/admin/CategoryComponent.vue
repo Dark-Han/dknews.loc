@@ -18,7 +18,7 @@
                 <v-toolbar flat color="white">
                     <v-toolbar-title>Категории</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
-                    <v-dialog v-model="dialog" max-width="550px">
+                    <v-dialog v-model="dialog" max-width="700px">
                         <template v-slot:activator="{ on }">
                             <v-row>
                                 <v-col cols="8">
@@ -53,17 +53,20 @@
                                         <v-row>
                                             <v-col cols="6">
                                                 <v-text-field
-                                                    v-model="editedItem.name"
-                                                    label="Название"
-                                                    :rules="requiredText('Название')"
+                                                    v-model="editedItem.name_ru"
+                                                    label="Название (ru)"
+                                                    :rules="requiredText('Название (ru)')"
                                                 ></v-text-field>
-                                                <v-file-input
-                                                    accept="image/*"
-                                                    label="Обложка"
-                                                    v-model="cover"
-                                                    :rules="requiredCover('Обложка')"
-                                                ></v-file-input>
-                                                <v-img :src='coverUrl' v-show="coverUrl!==null"></v-img>
+                                                <v-text-field
+                                                        v-model="editedItem.name_kz"
+                                                        label="Название (kz)"
+                                                        :rules="requiredText('Название (kz)')"
+                                                ></v-text-field>
+                                                <v-text-field
+                                                        v-model="editedItem.name_en"
+                                                        label="Название (en)"
+                                                        :rules="requiredText('Название (en)')"
+                                                ></v-text-field>
                                             </v-col>
                                             <v-col cols="6">
                                                 <v-text-field
@@ -78,6 +81,13 @@
                                                     type="number"
                                                     min="0"
                                                 ></v-text-field>
+                                                <v-file-input
+                                                        accept="image/*"
+                                                        label="Обложка"
+                                                        v-model="cover"
+                                                        :rules="requiredCover('Обложка')"
+                                                ></v-file-input>
+                                                <v-img :src='coverUrl' v-show="coverUrl!==null"></v-img>
                                             </v-col>
                                         </v-row>
                                     </v-form>
@@ -157,19 +167,25 @@
         data: () => ({
             headers: [
                 {text: "Действия", value: "actions", sortable: false,width:20},
-                {text: "Название", value: "name", sortable: false},
+                {text: "Название (ru)", value: "name_ru", sortable: false},
+                {text: "Название (kz)", value: "name_kz", sortable: false},
+                {text: "Название (en)", value: "name_en", sortable: false},
                 { text: "Порядковый номер (веб)", value: "serial_number_web", sortable: false },
                 { text: "Порядковый номер (моб)", value: "serial_number_mob", sortable: false }
             ],
             coverUrl: '',
             editedItem: {
-                name: "",
+                name_ru:'',
+                name_kz:'',
+                name_en:'',
                 cover: null,
                 serial_number_web: 0,
                 serial_number_mob: 0,
             },
             defaultItem: {
-                name: "",
+                name_ru:'',
+                name_kz:'',
+                name_en:'',
                 cover: null,
                 serial_number_web: 0,
                 serial_number_mob: 0,

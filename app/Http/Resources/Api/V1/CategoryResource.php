@@ -18,7 +18,9 @@ class CategoryResource extends JsonResource
             'cover' => $this->cover,
             'serial_number_web' => $this->serial_number_web,
             'serial_number_mob' => $this->serial_number_mob,
-            'name' => $this->name,
+            'name_ru'=>$this->name_ru,
+            'name_kz'=>$this->name_kz,
+            'name_en'=>$this->name_en
         ];
     }
 }

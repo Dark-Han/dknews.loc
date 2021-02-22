@@ -52,7 +52,15 @@ class IndexService{
     }
 
     public function getNewsFeedSectionNews(){
-        $news=News::orderBy('date_st','DESC')->limit(20)->get();
+        $categorySlug=LocaleService::getCategorySlugColumn();
+        $news=DB::table('news')
+            ->join('categories','news.category_id','=','categories.id')
+            ->join('languages','news.language_id','=','languages.id')
+            ->select('news.cover','news.title','news.seen','news.slug','news.date_st',"categories.$categorySlug as categorySlug")
+            ->where('languages.name',App::getLocale())
+            ->orderBy('date_st','DESC')
+            ->limit(20)
+            ->get();
         return $news;
     }
 

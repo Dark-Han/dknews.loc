@@ -184,7 +184,7 @@
                         <div class="col-6">
                             <select name="" id="" onchange="window.location = this.value">
                                 @foreach($languages as $lng)
-                                    <option value="/"><a href="">{{$lng}}</a></option>
+                                    <option value="/"><a href="">{{$lng->name}}</a></option>
                                 @endforeach
                             </select>
                         </div>
@@ -228,7 +228,7 @@
                         <div class="lang">
                             <ul>
                                @foreach($languages as $lng)
-                                    <li><a href="/">{{$lng}}</a></li>
+                                    <li><a href="/">{{$lng->name}}</a></li>
                                @endforeach
                             </ul>
                         </div>
@@ -307,7 +307,7 @@
             <div class="container">
                 <div class="menu">
                     <ul>
-                        @foreach($categories as $category)
+                        @foreach($headerCategories as $category)
                             <li><a  href="topics.php?id_cat={{$category->id}}">{{$category->name_ru}}</a></li>
                         @endforeach
                         <li>

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Api\MediaService;
 use App\Services\Api\NewspaperService;
+use App\Services\IndexService;
 use Illuminate\Support\ServiceProvider;
 
 use App\Services\Api\CategoryService;
@@ -17,6 +18,7 @@ class DependencyInjectionServiceProvider extends ServiceProvider
 {
 
     public $singletons = [
+        'IndexService'=>IndexService::class
     ];
 
     public function register()

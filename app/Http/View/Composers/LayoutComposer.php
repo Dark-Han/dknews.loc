@@ -23,6 +23,6 @@ class LayoutComposer
         $view->with('firstBanner', $firstBanner);
         $view->with('links', $links);
         $view->with('lastNewsPaper', $lastNewsPaper);
-        $view->with('categories', $categories);
+        $view->with('headerCategories', $categories);
     }
 }

@@ -160,7 +160,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="content">
 
@@ -308,7 +307,7 @@
                 <div class="menu">
                     <ul>
                         @foreach($headerCategories as $category)
-                            <li><a  href="topics.php?id_cat={{$category->id}}">{{$category->name_ru}}</a></li>
+                            <li><a  href="{{"$locale/$category->slug"}}">{{$category->name}}</a></li>
                         @endforeach
                         <li>
                             <div class="dropdown show">

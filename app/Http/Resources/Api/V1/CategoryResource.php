@@ -20,7 +20,8 @@ class CategoryResource extends JsonResource
             'serial_number_mob' => $this->serial_number_mob,
             'name_ru'=>$this->name_ru,
             'name_kz'=>$this->name_kz,
-            'name_en'=>$this->name_en
+            'name_en'=>$this->name_en,
+            'name_cn'=>$this->name_cn
         ];
     }
 }

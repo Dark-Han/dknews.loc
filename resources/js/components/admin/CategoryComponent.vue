@@ -67,6 +67,11 @@
                                                         label="Название (en)"
                                                         :rules="requiredText('Название (en)')"
                                                 ></v-text-field>
+                                                <v-text-field
+                                                        v-model="editedItem.name_cn"
+                                                        label="Название (cn)"
+                                                        :rules="requiredText('Название (cn)')"
+                                                ></v-text-field>
                                             </v-col>
                                             <v-col cols="6">
                                                 <v-text-field
@@ -170,6 +175,7 @@
                 {text: "Название (ru)", value: "name_ru", sortable: false},
                 {text: "Название (kz)", value: "name_kz", sortable: false},
                 {text: "Название (en)", value: "name_en", sortable: false},
+                {text: "Название (cn)", value: "name_cn", sortable: false},
                 { text: "Порядковый номер (веб)", value: "serial_number_web", sortable: false },
                 { text: "Порядковый номер (моб)", value: "serial_number_mob", sortable: false }
             ],
@@ -178,6 +184,7 @@
                 name_ru:'',
                 name_kz:'',
                 name_en:'',
+                name_cn:'',
                 cover: null,
                 serial_number_web: 0,
                 serial_number_mob: 0,
@@ -186,6 +193,7 @@
                 name_ru:'',
                 name_kz:'',
                 name_en:'',
+                name_cn:'',
                 cover: null,
                 serial_number_web: 0,
                 serial_number_mob: 0,

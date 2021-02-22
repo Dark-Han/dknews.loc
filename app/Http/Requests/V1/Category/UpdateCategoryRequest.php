@@ -28,6 +28,7 @@ class UpdateCategoryRequest extends FormRequest
             'name_ru'=>'required',
             'name_kz'=>'required',
             'name_en'=>'required',
+            'name_cn'=>'required',
             'serial_number_web'=>'required|integer',
             'serial_number_mob'=>'required|integer',
             'cover'=>'required|string',

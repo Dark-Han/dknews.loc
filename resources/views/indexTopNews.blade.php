@@ -1,6 +1,6 @@
                             <div class="col-xl-8 col-sm-12 main-banner-img">
                                 <div class="big-img-news">
-                                    <a href="inner-news.php?id_cat=12 &amp;&amp; id=166301">
+                                    <a href="{{$locale."/".$topNews[0]->categorySlug."/".$topNews[0]->slug}}">
                                         <img src="{{asset('storage/'.$topNews[0]->cover)}}" alt="" class="img-top-news" style="width: 100% !important;height:100%">
                                         <div class="big-news-caption">
                                             <p>Финансы <span><img src="images/view-icon-white.png" alt="">{{$topNews[0]->seen}}</span></p>

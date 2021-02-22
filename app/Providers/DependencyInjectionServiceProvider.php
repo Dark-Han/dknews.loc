@@ -18,7 +18,8 @@ class DependencyInjectionServiceProvider extends ServiceProvider
 {
 
     public $singletons = [
-        'IndexService'=>IndexService::class
+        'IndexService'=>IndexService::class,
+        'CategoryService'=>CategoryService::class,
     ];
 
     public function register()

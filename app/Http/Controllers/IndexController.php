@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BannerWeb;
-use App\Models\Category;
-use App\Models\Language;
-use App\Models\Link;
-use App\Models\Newspaper;
 use App\Services\IndexService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class IndexController extends Controller
 {
-    public function index(IndexService $indexService)
+    public function index(Request $request,IndexService $indexService)
     {
+        App::setLocale($request->locale);
         $topNews=$indexService->getTopNews();
         $newsFeedSectionNews=$indexService->getNewsFeedSectionNews();
         return view('index',compact('topNews','newsFeedSectionNews'));

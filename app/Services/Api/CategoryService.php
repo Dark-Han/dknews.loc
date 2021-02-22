@@ -19,6 +19,7 @@ class CategoryService {
             'name_ru' => $data['name_ru'],
             'name_kz' => $data['name_kz'],
             'name_en' => $data['name_en'],
+            'name_cn' => $data['name_cn'],
             'serial_number_web'=>$data['serial_number_web'],
             'serial_number_mob'=>$data['serial_number_mob'],
             'cover'=>$data['cover']
@@ -35,6 +36,7 @@ class CategoryService {
             'name_ru' => $data['name_ru'],
             'name_kz' => $data['name_kz'],
             'name_en' => $data['name_en'],
+            'name_cn' => $data['name_cn'],
             'serial_number_web'=>$data['serial_number_web'],
             'serial_number_mob'=>$data['serial_number_mob'],
             'cover'=>$data['cover']

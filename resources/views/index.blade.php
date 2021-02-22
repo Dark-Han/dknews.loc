@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-xl-9 col-md-9 col-sm-9">
                             <div class="row">
-                                @include('indexTopNews',$topNews)
+                                @include('indexTopNews',['topNews'=>$topNews,'locale'=>$locale])
                             </div>
                         </div>
 

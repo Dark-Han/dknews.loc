@@ -3,16 +3,26 @@
 namespace App\Services;
 
 use App\Models\News;
+use Illuminate\Support\Facades\DB;
 
 class IndexService{
 
     private $topNewsCountMustBe=6;
 
     public function getTopNews(){
-        $topNews=News::where('disposition_id',2)->orderBy('date_st','DESC')->limit(5)->get();
+        $categorySlug=LocaleService::getCategorySlugColumn();
+        $topNews=DB::table('news')
+            ->join('categories','news.category_id','=','categories.id')
+            ->select('news.cover','news.title','news.seen','news.slug',"categories.$categorySlug as categorySlug")
+            ->where('news.disposition_id',2)
+            ->orderBy('date_st','DESC')
+            ->limit($this->topNewsCountMustBe)
+            ->get();
+
         if($this->topNewsCountSmallThanMustBe($topNews)){
             return $this->getTopNewsWithMissingsFromOtherDispositions($topNews);
         }
+        return $topNews;
     }
 
     private function topNewsCountSmallThanMustBe($topNews){
@@ -23,8 +33,15 @@ class IndexService{
     }
 
     private function getTopNewsWithMissingsFromOtherDispositions($topNews){
+        $categorySlug=LocaleService::getCategorySlugColumn();
         $limit=$this->topNewsCountMustBe-count($topNews);
-        $news=News::whereIn('disposition_id',[1,3])->orderBy('date_st','DESC')->limit($limit)->get();
+        $news=DB::table('news')
+            ->join('categories','news.category_id','=','categories.id')
+            ->select('news.cover','news.title','news.seen','news.slug',"categories.$categorySlug as categorySlug")
+            ->whereIn('news.disposition_id',[1,3])
+            ->orderBy('date_st','DESC')
+            ->limit($limit)
+            ->get();
         $topNews=$topNews->merge($news);
         return $topNews;
     }

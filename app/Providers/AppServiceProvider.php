@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\View\Composers\LayoutComposer;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Jenssegers\Date\Date;
 use Illuminate\Support\Facades\View;
@@ -28,5 +29,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Date::setlocale(config('app.locale'));
         View::composer('layout', LayoutComposer::class);
+        View::composer('*', function ($view) {
+            $view->with('locale',App::getLocale());
+        });
     }
 }

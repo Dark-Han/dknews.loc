@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="main-title wow slideInUp">
-                    <h4>Главные новости сегодня</h4>
+                    <h4>@lang('list.Главные новости сегодня')</h4>
                 </div>
                 <div class="main-white-section wow fadeIn">
                     <div class="row">
@@ -20,7 +20,9 @@
                         <div class="col-sm-3">
                             <div class="news-lent-title">
                                 <h6>
-                                    <a href="https://dknews.kz/topics.php?id_cat=all" style="color:#172f47" target="_blank">Лента новостей</a>
+                                    <a href="https://dknews.kz/topics.php?id_cat=all" style="color:#172f47" target="_blank">
+                                        @lang('list.Лента новостей')
+                                    </a>
                                 </h6>
                             </div>
                             <div class="side-bar-scroll">
@@ -36,7 +38,7 @@
                         </div>
                         <div class="col-sm-12">
                             <div class="all-lent">
-                                <a href="topics.php?id_cat=all">Все последние новости</a>
+                                <a href="topics.php?id_cat=all">@lang('list.Все последние новости')</a>
                             </div>
                         </div>
                     </div>

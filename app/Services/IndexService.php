@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\News;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 class IndexService{
@@ -13,8 +14,10 @@ class IndexService{
         $categorySlug=LocaleService::getCategorySlugColumn();
         $topNews=DB::table('news')
             ->join('categories','news.category_id','=','categories.id')
+            ->join('languages','news.language_id','=','languages.id')
             ->select('news.cover','news.title','news.seen','news.slug',"categories.$categorySlug as categorySlug")
             ->where('news.disposition_id',2)
+            ->where('languages.name',App::getLocale())
             ->orderBy('date_st','DESC')
             ->limit($this->topNewsCountMustBe)
             ->get();
@@ -37,8 +40,10 @@ class IndexService{
         $limit=$this->topNewsCountMustBe-count($topNews);
         $news=DB::table('news')
             ->join('categories','news.category_id','=','categories.id')
+            ->join('languages','news.language_id','=','languages.id')
             ->select('news.cover','news.title','news.seen','news.slug',"categories.$categorySlug as categorySlug")
             ->whereIn('news.disposition_id',[1,3])
+            ->where('languages.name',App::getLocale())
             ->orderBy('date_st','DESC')
             ->limit($limit)
             ->get();

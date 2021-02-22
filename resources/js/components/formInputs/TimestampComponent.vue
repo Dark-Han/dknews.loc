@@ -74,8 +74,7 @@
             }
         }),
         created(){
-            this.setDefaultDate();
-            this.setDefaultTime();
+            this.setTimestampWhenComponentCreatedByEditedIndexValue();
         },
         watch:{
             'timestamp.date':function (val) {
@@ -84,21 +83,22 @@
             },
             'timestamp.time':function (val) {
                 this.setTimestamp();
+            }
+        },
+        methods:{
+            setTimestamp(){
+                this.$emit('onSetTimestamp',this.timestamp);
             },
-            editedIndex(val){
-                if(val>-1){
+            setTimestampWhenComponentCreatedByEditedIndexValue(){
+                if(this.editedIndex>-1){
                     this.setCurrentDate();
                     this.setCurrentTime();
                     this.setTimestamp();
                 }else{
                     this.setDefaultDate();
                     this.setDefaultTime();
+                    this.setTimestamp();
                 }
-            }
-        },
-        methods:{
-            setTimestamp(){
-                this.$emit('onSetTimestamp',this.timestamp);
             },
             formatDate(date){
                 if (!date) return null

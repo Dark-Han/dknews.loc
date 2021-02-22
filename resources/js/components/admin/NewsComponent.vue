@@ -93,6 +93,7 @@
                                                 ></v-autocomplete>
                                                 <v-file-input
                                                         accept="image/*"
+                                                        ref="newsCover"
                                                     label="Обложка"
                                                     @change="coverUploadhandler"
                                                     :rules="requiredImage('Обложка')"
@@ -153,12 +154,17 @@
                                                     <timestamp-component
                                                         :currentDate="editedItem.timestampSt"
                                                         :editedIndex="editedIndex"
-                                                        @onSetTimestamp="setTimestamp('timestampSt',$event)"></timestamp-component>
+                                                        @onSetTimestamp="setTimestamp('timestampSt',$event)"
+                                                        v-if="dialog"
+                                                    ></timestamp-component>
+
                                                     <timestamp-component
                                                         v-show="showDateEn"
                                                         :currentDate="editedItem.timestampEn"
                                                         :editedIndex="editedIndex"
-                                                        @onSetTimestamp="setTimestamp('timestampEn',$event)"></timestamp-component>
+                                                        @onSetTimestamp="setTimestamp('timestampEn',$event)"
+                                                        v-if="dialog"
+                                                    ></timestamp-component>
                                                 </div>
                                             </v-col>
                                             <v-col cols="8" id="editor">
@@ -336,6 +342,11 @@
                     this.showLimit=false;
                 }else{
                     this.showLimit=true;
+                }
+            },
+            dialog(val){
+                if(!val){
+                    this.$refs.newsCover.reset();
                 }
             }
         },
@@ -517,7 +528,6 @@
                 if(this.editedItem.uploadedImages.length!==0){
                     this.deleteUploadedImagesOfNotCreatedNews();
                 }
-                this.newsCover=null;
                 this.dialog=false;
             },
             deleteUploadedImagesOfNotCreatedNews() {

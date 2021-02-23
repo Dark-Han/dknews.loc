@@ -542,15 +542,24 @@
                     });
             },
             setCoverForAllLngEditors(){
-                let newCoverPath=this.editedItem.cover;
-                    this.editor.execCommand('mceInsertContent', false, '</br>' +
-                        '<img src="/storage/' + newCoverPath + '" id="cover" height="250px" width="350px"></img>');
+                let newCoverPath='/storage/'+this.editedItem.cover;
+                    this.editor.execCommand('mceInsertContent', false, `</br>` +
+                        `<img
+                                src="` + newCoverPath + `"
+                                data-mce-src="`+newCoverPath+`"
+                                id="cover"
+                                height="250px"
+                                width="350px">
+                        </img>`);
                     this.editedItem.text = this.editor.getContent();
             },
             updateCoverForAllLngEditors(){
-                let updatedCoverPath=this.editedItem.cover;
-                this.editor.dom.setAttribs(
-                    this.editor.dom.select('#cover'), {'src': '/storage/' + updatedCoverPath}
+                let updatedCoverPath='/storage/'+this.editedItem.cover;
+                this.editor.dom.setAttrib(
+                    this.editor.dom.select('#cover'), {'src': updatedCoverPath}
+                );
+                this.editor.dom.setAttrib(
+                    this.editor.dom.select('#cover'), {'data-mce-src': updatedCoverPath}
                 );
                 this.editedItem.text = this.editor.getContent();
             },

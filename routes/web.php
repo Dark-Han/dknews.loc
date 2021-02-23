@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Localization;
 use Illuminate\Support\Facades\Route;
 
 //Админка
@@ -9,5 +10,8 @@ Route::get('/admin/{any}', 'Admin\MainController@index')->where('any', '.*');
 
 
 //Фронт
-Route::get('/{locale}', 'IndexController@index');
-Route::get('/{locale}/{categorySlug}/{newsSlug}', 'NewsController@index');
+Route::middleware([Localization::class])->group(function () {
+    Route::get('/{localization?}', 'IndexController@index');
+    Route::get('/{localization}/{categorySlug}/{newsSlug}', 'NewsController@index');
+});
+

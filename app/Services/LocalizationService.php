@@ -4,10 +4,10 @@ namespace App\Services;
 use Illuminate\Support\Facades\App;
 
 /**
- * Class LocaleService
+ * Class LocalizationService
  * @package App\Services
  */
-class LocaleService{
+class LocalizationService{
 
     /**
      * @return string

@@ -11,7 +11,7 @@ class IndexService{
     private $topNewsCountMustBe=6;
 
     public function getTopNews(){
-        $categorySlug=LocaleService::getCategorySlugColumn();
+        $categorySlug=LocalizationService::getCategorySlugColumn();
         $topNews=DB::table('news')
             ->join('categories','news.category_id','=','categories.id')
             ->join('languages','news.language_id','=','languages.id')
@@ -36,7 +36,7 @@ class IndexService{
     }
 
     private function getTopNewsWithMissingsFromOtherDispositions($topNews){
-        $categorySlug=LocaleService::getCategorySlugColumn();
+        $categorySlug=LocalizationService::getCategorySlugColumn();
         $limit=$this->topNewsCountMustBe-count($topNews);
         $news=DB::table('news')
             ->join('categories','news.category_id','=','categories.id')
@@ -52,7 +52,7 @@ class IndexService{
     }
 
     public function getNewsFeedSectionNews(){
-        $categorySlug=LocaleService::getCategorySlugColumn();
+        $categorySlug=LocalizationService::getCategorySlugColumn();
         $news=DB::table('news')
             ->join('categories','news.category_id','=','categories.id')
             ->join('languages','news.language_id','=','languages.id')

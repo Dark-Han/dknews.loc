@@ -12,7 +12,6 @@ class NewsController extends Controller
 {
     public function index(Request $request,CategoryService $categoryService)
     {
-        App::setLocale($request->locale);
         $news=News::where('slug',$request->newsSlug)->first();
         $category=$categoryService->getCategoryBySlug($request->categorySlug);
         return view('news',compact(

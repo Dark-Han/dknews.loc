@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Category;
-use App\Services\LocalizationService;
+use App\Services\CategoryColumnGenerater;
 
 /**
  * Class CategoryService
@@ -17,8 +17,8 @@ class CategoryService
      */
     public function getHeaderCategories()
     {
-        $nameColumn = LocalizationService::getCategoryNameColumn();
-        $slugColumn = LocalizationService::getCategorySlugColumn();
+        $nameColumn = CategoryColumnGenerater::getCategoryNameColumn();
+        $slugColumn = CategoryColumnGenerater::getNameColumn();
         $category = Category::select("$nameColumn as name", "$slugColumn as slug")
             ->orderBy('serial_number_web', 'DESC')
             ->get();
@@ -31,8 +31,8 @@ class CategoryService
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
      */
     public function getCategoryBySlug($slug){
-        $nameColumn = LocalizationService::getCategoryNameColumn();
-        $slugColumn = LocalizationService::getCategorySlugColumn();
+        $nameColumn = CategoryColumnGenerater::getNameColumn();
+        $slugColumn = CategoryColumnGenerater::getSlugColumn();
         $category = Category::select("$nameColumn as name", "$slugColumn as slug")
             ->where($slugColumn,$slug)
             ->first();

@@ -4,17 +4,16 @@ namespace App\Services;
 use Illuminate\Support\Facades\App;
 
 /**
- * Class LocalizationService
+ * Class CategoryColumnGenerater
  * @package App\Services
  */
-class LocalizationService{
+class CategoryColumnGenerater{
 
     /**
      * @return string
      */
-    public static function getCategorySlugColumn():string {
-        $locale=App::getLocale();
-        switch ($locale) {
+    public static function getSlugColumn():string {
+        switch (App::getLocale()) {
             case 'ru':
                 return 'slug_ru';
             case 'kz':
@@ -26,9 +25,8 @@ class LocalizationService{
         }
     }
 
-    public static function getCategoryNameColumn():string {
-        $locale=App::getLocale();
-        switch ($locale) {
+    public static function getNameColumn():string {
+        switch (App::getLocale()) {
             case 'ru':
                 return 'name_ru';
             case 'kz':

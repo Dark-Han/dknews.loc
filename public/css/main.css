@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    background-color: #EDF1F6;
+    padding: 0;
+    margin: 0;
+    font-size: 80%;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* TOP */
+#top {
+    color: #fff;
+    background: url('../images/top.png') center;
+    background-size: cover;
+    padding: 20px 0;
+}
+#top .address, #top .contacts {
+    padding-top: 20px;
+}
+#top .contacts .mail {
+    margin-top: 5px;
+}
+#top .logo {
+    text-align: center;
+}
+#top .logo img {
+    width: 90px;
+}
+.contacts img, .address img {
+    margin-right: 10px;
+}
+.address img {
+    float: left;
+}
+.address div {
+    padding-left: 26px;
+}
+
+
+/* TOPMENU */
+#topmenu {
+    background: #ffffff;
+}
+/*#topmenu ul {
+    padding: 0;
+    margin: 0;
+}
+#topmenu li {
+    float: left;
+    list-style: none;
+}
+
+*/
+#topmenu a {
+    display: inline-block;
+    padding: 13px 18px;
+    text-decoration: none;
+    color: #3a3a3a;
+}
+#topmenu a:hover, #topmenu .active {
+    background: #DE4471;
+    color: #ffffff;
+}
+#topmenu a img {
+    width: 16px;
+    height: 16px;
+}
+.clear {
+    clear: both;
+}
+#topmenu .navbar {
+    padding: 0 !important;
+    background: #ffffff !important;
+}
+#topmenu .navbar-toggler {
+    margin: 10px;
+}
+.navbar-brand {
+    display: none !important;
+}
+
+/* SLIDERS */
+#carousel {
+    position: relative;
+}
+#carousel img {
+    min-width: 700px;
+}
+#carousel .caption {
+    font-family: 'Roboto Slab', serif;
+    color: #fff;
+    position: absolute;
+    top: 180px;
+    left: 180px;
+}
+#carousel h4 {
+    margin: 0;
+    padding: 0;
+}
+#carousel h1 {
+    font-weight: 800;
+    font-size: 50px;
+    margin: 0;
+}
+#carousel p {
+    margin-top: 20px;
+}
+#carousel .btn-custom {
+    font-size: 90%;
+    background: #DE4471;
+    color: #fff;
+}
+
+
+/* FOOTER */
+footer {
+    background: #434653;
+    padding: 40px 30px 20px;
+    color: #767A8C;
+}
+footer a {
+    color: #767A8C;
+}
+footer a:hover, footer .hover {
+    color: #b5bbd3;
+    text-decoration: none;
+}
+footer ul {
+    list-style-image: url('../images/icons/arrow.png');
+    padding-left: 15px;
+}
+footer .contacts, footer .mail {
+    margin-top: 10px;
+}
+footer .border-bottom {
+    border-bottom: 1px solid #4B4F5D !important;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+footer .logo-footer {
+    text-align: center;
+}
+
+
+
+
+
+@media (max-width: 992px) {
+    #carousel .caption {
+        top: 100px;
+        left: 100px;
+    }
+    #top {
+        display: none;
+    }
+    .navbar-brand {
+        display: inline !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .navbar-brand img {
+        width: 40px !important;
+        height: auto !important;
+    }
+}
+@media (max-width: 768px) {
+    #carousel .caption {
+        top: 40px;
+        left: 50px;
+    }
+    #carousel h1 {
+        font-size: 30px;
+    }
+    #carousel h4 {
+        font-size: 20px;
+    }
+    .owl-slider-one .owl-nav {
+	display: none;
+    }
+}

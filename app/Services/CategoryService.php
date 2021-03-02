@@ -17,8 +17,8 @@ class CategoryService
      */
     public function getHeaderCategories()
     {
-        $nameColumn = CategoryColumnGenerater::getCategoryNameColumn();
-        $slugColumn = CategoryColumnGenerater::getNameColumn();
+        $nameColumn = CategoryColumnGenerater::getNameColumn();
+        $slugColumn = CategoryColumnGenerater::getSlugColumn();
         $category = Category::select("$nameColumn as name", "$slugColumn as slug")
             ->orderBy('serial_number_web', 'DESC')
             ->get();

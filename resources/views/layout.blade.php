@@ -225,7 +225,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="lang">
-                            <ul>
+                            <ul class='localizationList'>
                                @foreach($languages as $lng)
                                     <li><a href="/{{strtolower($lng->name)}}">{{$lng->name}}</a></li>
                                @endforeach
@@ -445,15 +445,22 @@
         </footer>
 
         </body>
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/hc-offcanvas-nav.js"></script>
+
+        <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+        //<script src="{{asset('js/hc-offcanvas-nav.js')}}"></script>
+
         <script>
-            jQuery(document).ready(function($) {
-                $('#main-nav').hcOffcanvasNav({
-                    maxWidth: 980
+            $(document).ready(function() {
+                $('.localizationList a').on('click',function(e){
+                     e.preventDefault();
+                    let localization=$(this).html();
+                    Cookies.set('localization', localization, { expires: 100 });
+                    window.location.href = $(this).attr('href');
                 });
             });
         </script>
+
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
         <script src="{{asset('js/smoothbox.min.js')}}"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>

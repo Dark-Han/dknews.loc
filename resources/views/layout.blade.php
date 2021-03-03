@@ -319,7 +319,12 @@
 		<div class="container">
 			<div class="menu">
 				<ul>
-					@foreach($headerCategories as $category)
+					@foreach($headerCategories as $i=>$category)
+                        @php
+                            if($i>7){
+                                break;
+                            }
+                        @endphp
 					<li><a href="/{{"$locale/$category->slug"}}">{{$category->name}}</a></li>
 					@endforeach
 					<li>
@@ -330,6 +335,13 @@
 							        style="background-color: #172f47;font:15px 'RCB',sans-serif;margin-top: 6px;">
 								Еще
 							</button>
+							<div class="dropdown-menu dropdown-right" aria-labelledby="dropdownMenuLink">
+							    @for($i=8;$i<$headerCategories->count();$i++)
+                                 <a class="dropdown-item"
+                                    href="/{{"$locale/$headerCategories[$i]->slug"}}"
+                                    style="color: white">{{$headerCategories[$i]->name}}</a>
+                                @endfor
+                            </div>
 						</div>
 					</li>
 				</ul>

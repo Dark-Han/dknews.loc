@@ -185,7 +185,7 @@
 					<div class="col-6">
 						<select name="" id="" onchange="window.location = this.value">
 							@foreach($languages as $lng)
-							@if(App::getLocale()===strtolower($lng->name))
+							@if($locale===strtolower($lng->name))
 							<li><a href="/{{strtolower($lng->name)}}" class='active'>{{$lng->name}}</a></li>
 							@else
 							<li><a href="/{{strtolower($lng->name)}}">{{$lng->name}}</a></li>
@@ -233,7 +233,7 @@
 					<div class="lang">
 						<ul class='localizationList'>
 							@foreach($languages as $lng)
-							@if(App::getLocale()===strtolower($lng->name))
+							@if($locale===strtolower($lng->name))
 							<li><a href="/{{strtolower($lng->name)}}" class='active'>{{$lng->name}}</a></li>
 							@else
 							<li><a href="/{{strtolower($lng->name)}}">{{$lng->name}}</a></li>
@@ -320,7 +320,7 @@
 			<div class="menu">
 				<ul>
 					@foreach($headerCategories as $category)
-					<li><a href="{{" $locale/$category->slug"}}">{{$category->name}}</a></li>
+					<li><a href="/{{"$locale/$category->slug"}}">{{$category->name}}</a></li>
 					@endforeach
 					<li>
 						<div class="dropdown show">

@@ -6,13 +6,13 @@
 		<div class="col-sm-12">
 			<div class="breadcrumbs wow fadeInLeft" style="visibility: visible;">
 				<ul>
-					<li><a href="/">Главная</a></li>
+					<li><a href="/">@lang('list.Главная')</a></li>
 					<li>/</li>
-					<li>Общество</li>
+					<li>{{$category->name}}</li>
 				</ul>
 			</div>
 			<div class="main-title">
-				<h4>Общество</h4>
+				<h4>{{$category->name}}</h4>
 			</div>
 		</div>
 		<div class="col-sm-12">
@@ -20,61 +20,73 @@
 				<div class="row">
 					<div class="col-sm-3">
 						<div class="news-lent-title">
-							<h6>Популярное в рубрике</h6>
+							<h6>@lang('list.Популярное в рубрике')</h6>
 						</div>
 						<div class="side-bar-scroll">
+						@foreach($categoryTopNews as $news)
 							<div class="news-lent-item">
 								<div class="date">
-									<p>17 февраля 2021, 11:45<span><img src="images/view-icon.png" alt="">6316</span>
+									<p>{{$news->date_st}}<span><img src="images/view-icon.png" alt="">{{$news->seen}}</span>
 									</p>
 								</div>
-								<a href="inner-news.php?id_cat=15&amp;&amp;id=165628">Штраф и возврат денег: жители
-									Нур-Султана добились справедливости</a>
+								<a href="{{"/$locale/$news->categorySlug/$news->slug"}}">{{$news->title}}</a>
 							</div>
+					    @endforeach
 						</div>
-					
+
 					</div>
 					<div class="col-sm-9">
 						<div class="row">
-							<div class="col-sm-4">
-								<div class="inner-lang-news">
-									<a href="inner-news.php?id_cat=15&amp;&amp;id=168388">
-										<div class="category-img">
-											<img src="admin/img/603e0810cba45.jpg" class="img-fluid" alt="">
-										</div>
-										<div class="date">
-											<p>2 марта 2021, 15:27<span><img src="images/view-icon.png" alt="">99</span>
-											</p>
-										</div>
-										<h6>Какие продукты сильно подорожали в Казахстане в феврале</h6>
-									</a>
-								</div>
-							</div>
+						    @foreach($categoryNews as $i=>$news)
+						        @php
+						            if($i>5){
+						                break;
+						            }
+						        @endphp
+                                    <div class="col-sm-4">
+                                        <div class="inner-lang-news">
+                                            <a href='{{"/$locale/$news->categorySlug/$news->slug"}}'>
+                                                <div class="category-img">
+                                                    <img src='{{asset("storage/$news->cover")}}' class="img-fluid" alt="">
+                                                </div>
+                                                <div class="date">
+                                                    <p>{{$news->date_st}}<span><img src="images/view-icon.png" alt="">{{$news->seen}}</span>
+                                                    </p>
+                                                </div>
+                                                <h6>{{$news->title}}</h6>
+                                            </a>
+                                        </div>
+                                    </div>
+							@endforeach
 						</div>
 					</div>
+					@if($categoryNews->total()>6)
+					@for($i=6;$i<$categoryNews->total();$i++)
 					<div class="col-sm-3" style="margin-top: 20px;">
 						<div class="inner-lang-news">
-							<a href="inner-news.php?id_cat=15&amp;&amp;id=168322">
+							<a href="{{"/$locale/$category->slug/".$categoryNews[$i]->slug}}">
 								<div class="category-img">
-									<img src="admin/img/603da0882a4bf.jpg" class="img-fluid" alt="">
+									<img src='{{asset("storage/".$categoryNews[$i]->cover)}}' class="img-fluid" alt="">
 								</div>
 								<div class="date">
-									<p>2 марта 2021, 08:12<span><img src="images/view-icon.png" alt="">385</span></p>
+									<p>{{$categoryNews[$i]->date_st}}<span><img src="images/view-icon.png" alt="">{{$categoryNews[$i]->seen}}</span></p>
 								</div>
-								<h6>658 новых случаев заболевания COVID-19 зарегистрировано в Казахстане</h6>
+								<h6>{{$categoryNews[$i]->title}}</h6>
 							</a>
 						</div>
 					</div>
+					@endfor
+					@endif
 					<div id="inner_news" class="row">
-					
+
 					</div>
 					<div class="col-sm-12" onclick="show_more('WHERE category_id=15',window.serial_number)"
 					     id="show_more_button">
 						<div class="show-more" data-toggle="collapse" data-target="#demo45">
-							<p id="sh_hi">Показать еще</p>
+							<p id="sh_hi">@lang('list.Показать ещё')</p>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -87,7 +99,7 @@
 			<div class="main-white-section wow fadeIn" style="visibility: visible;">
 				<div class="row">
 					<div class="col-sm-6">
-						
+
 						<div class="inner-category-item">
 							<div class="title-block" style="width:fit-content">
 								<p><a style="color: white" href="topics.php?id_cat=24">中文文章</a></p>
@@ -108,8 +120,8 @@
 								</a>
 							</div>
 						</div>
-						
-						
+
+
 						<div class="inner-category-item">
 							<div class="title-block" style="width:fit-content">
 								<p><a style="color: white" href="topics.php?id_cat=23">Қазақ тіліндегі мақалалар</a></p>
@@ -130,7 +142,7 @@
 								</a>
 							</div>
 						</div>
-					
+
 					</div>
 					<div class="col-sm-12" onclick="show_hide('sh_hi2')">
 						<div class="show-more" data-toggle="collapse" data-target="#demo2">

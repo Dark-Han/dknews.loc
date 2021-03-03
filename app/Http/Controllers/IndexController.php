@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\IndexService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 
 class IndexController extends Controller
 {

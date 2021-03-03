@@ -20,7 +20,7 @@ class Localization
         if(isset($_COOKIE['localization'])){
             $localization=strtolower($_COOKIE['localization']);
             if(in_array($localization,$existingLocalizations)){
-                App::setLocale($request->localization);
+                App::setLocale($localization);
             }
             return $next($request);
         }

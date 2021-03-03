@@ -5,6 +5,7 @@ namespace App\Services\Api;
 use App\Contracts\iImageHandler;
 use App\Models\News;
 use App\Models\NewsImage;
+use Illuminate\Support\Str;
 
 class NewsService
 {
@@ -33,6 +34,7 @@ class NewsService
     {
         $news = News::create([
             'title' => $data['title'],
+            'slug' => Str::slug($data['title']),
             'text' => $data['text'],
             'language_id' => $data['language_id'],
             'disposition_id' => $data['disposition_id'],

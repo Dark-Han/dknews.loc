@@ -14,10 +14,9 @@ class IndexService{
         $categorySlug=CategoryColumnGenerater::getSlugColumn();
         $topNews=DB::table('news')
             ->join('categories','news.category_id','=','categories.id')
-            ->join('languages','news.language_id','=','languages.id')
             ->select('news.cover','news.title','news.seen','news.slug',"categories.$categorySlug as categorySlug")
             ->where('news.disposition_id',2)
-            ->where('languages.name',App::getLocale())
+            ->where('news.language_id',App::getLocale())
             ->orderBy('date_st','DESC')
             ->limit($this->topNewsCountMustBe)
             ->get();
@@ -40,10 +39,9 @@ class IndexService{
         $limit=$this->topNewsCountMustBe-count($topNews);
         $news=DB::table('news')
             ->join('categories','news.category_id','=','categories.id')
-            ->join('languages','news.language_id','=','languages.id')
             ->select('news.cover','news.title','news.seen','news.slug',"categories.$categorySlug as categorySlug")
             ->whereIn('news.disposition_id',[1,3])
-            ->where('languages.name',App::getLocale())
+            ->where('news.language_id',App::getLocale())
             ->orderBy('date_st','DESC')
             ->limit($limit)
             ->get();
@@ -55,9 +53,8 @@ class IndexService{
         $categorySlug=CategoryColumnGenerater::getSlugColumn();
         $news=DB::table('news')
             ->join('categories','news.category_id','=','categories.id')
-            ->join('languages','news.language_id','=','languages.id')
             ->select('news.cover','news.title','news.seen','news.slug','news.date_st',"categories.$categorySlug as categorySlug")
-            ->where('languages.name',App::getLocale())
+            ->where('news.language_id',App::getLocale())
             ->orderBy('date_st','DESC')
             ->limit(20)
             ->get();

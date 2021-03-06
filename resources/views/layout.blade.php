@@ -185,10 +185,22 @@
 					<div class="col-6">
 						<select name="" id="" onchange="window.location = this.value">
 							@foreach($languages as $lng)
-							@if($locale===strtolower($lng->name))
-							<li><a href="/{{strtolower($lng->name)}}" class='active'>{{$lng->name}}</a></li>
+							@if($locale===$lng->id)
+							<li><a
+							        href="/{{strtolower($lng->name)}}"
+							        class='active'
+							        data-id='{{$lng->id}}'
+							        >{{$lng->name}}
+							     </a>
+							</li>
 							@else
-							<li><a href="/{{strtolower($lng->name)}}">{{$lng->name}}</a></li>
+							<li><a
+							        href="/{{strtolower($lng->name)}}"
+							        data-id='{{$lng->id}}'
+							     >
+							        {{$lng->name}}
+							     </a>
+							</li>
 							@endif
 							@endforeach
 						</select>
@@ -233,10 +245,23 @@
 					<div class="lang">
 						<ul class='localizationList'>
 							@foreach($languages as $lng)
-							@if($locale===strtolower($lng->name))
-							<li><a href="/{{strtolower($lng->name)}}" class='active'>{{$lng->name}}</a></li>
+							@if($locale===$lng->id)
+							<li><a
+							        href="/{{strtolower($lng->name)}}"
+							        class='active'
+							        data-id='{{$lng->id}}'
+							        >
+							        {{$lng->name}}
+							    </a>
+							</li>
 							@else
-							<li><a href="/{{strtolower($lng->name)}}">{{$lng->name}}</a></li>
+							<li><a
+							        href="/{{strtolower($lng->name)}}"
+							        data-id='{{$lng->id}}'
+							        >
+							        {{$lng->name}}
+							    </a>
+							</li>
 							@endif
 							@endforeach
 						</ul>
@@ -486,7 +511,7 @@
     $(document).ready(function () {
         $('.localizationList a').on('click', function (e) {
             e.preventDefault();
-            let localization = $(this).html();
+            let localization = $(this).attr('data-id');
             Cookies.set('localization', localization, {expires: 100});
             window.location.href = $(this).attr('href');
         });

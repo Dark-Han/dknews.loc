@@ -18,7 +18,7 @@ class Localization
     {
         $existingLocalizations=['ru','kz','en','cn'];
         if(isset($_COOKIE['localization'])){
-            $localization=strtolower($_COOKIE['localization']);
+            $localization=$_COOKIE['localization'];
             if(in_array($localization,$existingLocalizations)){
                 App::setLocale($localization);
             }

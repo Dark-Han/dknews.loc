@@ -21,7 +21,7 @@ class LayoutComposer
 
     public function compose(View $view)
     {
-        $languages = Language::all();
+        $languages = Language::orderBy('serial_number','ASC')->get();
         $firstBanner = BannerWeb::where('serial_number_id', 1)->first();
         $links = Link::with('linkTypes')->get();
         $lastNewsPaper=Newspaper::orderBy('id','desc')->first();

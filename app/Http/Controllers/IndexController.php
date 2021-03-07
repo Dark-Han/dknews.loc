@@ -12,11 +12,14 @@ class IndexController extends Controller
     {
         $topNews=$indexPageRepository->getTopNews();
         $newsFeedSectionNews=$indexPageRepository->getNewsFeedSectionNews();
-        $categories=$indexPageRepository->getCategoriesWithNews();
+        $categories = $indexPageRepository->getTopCategoriesWithNews();
+        $specificCategories = $indexPageRepository->getSpecificCategoriesWithNews();
+
         return view('index',compact(
             'topNews'
             ,'newsFeedSectionNews'
             ,'categories'
+                , 'specificCategories'
             )
         );
     }

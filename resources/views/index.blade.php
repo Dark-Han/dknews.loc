@@ -69,4 +69,9 @@
 					</div>
 				</div>
 			</div>
+
+			@foreach($specificCategories as $category)
+                @include('indexPageBlocks.specificCategory');
+            @endforeach
+
 			@endsection

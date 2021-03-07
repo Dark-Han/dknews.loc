@@ -5,47 +5,18 @@ namespace App\Services;
 use App\Models\News;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-
+use App\Repositories\IndexPageRepository;
 class IndexService{
 
-    private $topNewsCountMustBe=6;
+    private $indexPageRepository;
+
+    public function __construct()
+    {
+        $this->indexPageRepository=new IndexPageRepository();
+    }
 
     public function getTopNews(){
-        $categorySlug=CategoryColumnGenerater::getSlugColumn();
-        $topNews=DB::table('news')
-            ->join('categories','news.category_id','=','categories.id')
-            ->select('news.cover','news.title','news.seen','news.slug',"categories.$categorySlug as categorySlug")
-            ->where('news.disposition_id',2)
-            ->where('news.language_id',App::getLocale())
-            ->orderBy('date_st','DESC')
-            ->limit($this->topNewsCountMustBe)
-            ->get();
-
-        if($this->topNewsCountSmallThanMustBe($topNews)){
-            return $this->getTopNewsWithMissingsFromOtherDispositions($topNews);
-        }
-        return $topNews;
-    }
-
-    private function topNewsCountSmallThanMustBe($topNews){
-        if($this->topNewsCountMustBe>count($topNews)){
-            return true;
-        }
-        return false;
-    }
-
-    private function getTopNewsWithMissingsFromOtherDispositions($topNews){
-        $categorySlug=CategoryColumnGenerater::getSlugColumn();
-        $limit=$this->topNewsCountMustBe-count($topNews);
-        $news=DB::table('news')
-            ->join('categories','news.category_id','=','categories.id')
-            ->select('news.cover','news.title','news.seen','news.slug',"categories.$categorySlug as categorySlug")
-            ->whereIn('news.disposition_id',[1,3])
-            ->where('news.language_id',App::getLocale())
-            ->orderBy('date_st','DESC')
-            ->limit($limit)
-            ->get();
-        $topNews=$topNews->merge($news);
+        $topNews=$this->indexPageRepository->getTopNews();
         return $topNews;
     }
 

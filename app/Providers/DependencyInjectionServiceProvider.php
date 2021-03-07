@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\IndexPageRepository;
 use App\Services\Api\MediaService;
 use App\Services\Api\NewspaperService;
 use App\Services\IndexService;
@@ -20,6 +21,7 @@ class DependencyInjectionServiceProvider extends ServiceProvider
     public $singletons = [
         'IndexService'=>IndexService::class,
         'CategoryService'=>CategoryService::class,
+        'IndexPageRepository'=>IndexPageRepository::class
     ];
 
     public function register()

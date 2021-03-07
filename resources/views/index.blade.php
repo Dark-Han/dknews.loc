@@ -13,7 +13,7 @@
 					<div class="row">
 						<div class="col-xl-9 col-md-9 col-sm-9">
 							<div class="row">
-								@include('indexTopNews',['topNews'=>$topNews,'locale'=>$locale])
+								@include('indexPageBlocks.topNews',['topNews'=>$topNews,'locale'=>$locale])
 							</div>
 						</div>
 
@@ -51,13 +51,13 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
-                                @include('indexCategoriesWithNews')
+                              @include('indexPageBlocks.categoriesWithNews',['categories'=>$categories->take(4)])
 							</div>
 						</div>
 						<div class="col-sm-12">
 							<div id="demo" class="collapse">
 								<div class="row">
-
+                                   @include('indexPageBlocks.categoriesWithNews',['categories'=>$categories->skip(4)])
 								</div>
 							</div>
 						</div>

@@ -80,7 +80,7 @@ class IndexPageRepository
                         return $query
                             ->select('category_id', 'title', 'cover', 'date_st', 'seen', 'slug')
                             ->where('language_id', App::getLocale())
-                            ->limit(5);
+                            ->limit(4);
                     }
                 ]
             )

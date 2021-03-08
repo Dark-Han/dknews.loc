@@ -111,10 +111,24 @@ class IndexPageRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function getInfographicsNews()
+    {
+        $params=new CategoriesWithNewsParams([1],1,3);
+        $categories = $this->getCategoriesWithNewsFromParams($params);
+        return $categories;
+    }
+
+    /**
      * @param CategoriesWithNewsParams $params
      * @return mixed
      */
     //Вынести в будущем в отдельный сервис
+    /**
+     * @param CategoriesWithNewsParams $params
+     * @return mixed
+     */
     public function getCategoriesWithNewsFromParams(CategoriesWithNewsParams $params)
     {
         $categories = $this->categoriesWithNewsCollection;

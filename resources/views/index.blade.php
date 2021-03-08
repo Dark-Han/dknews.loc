@@ -74,4 +74,9 @@
                 @include('indexPageBlocks.specificCategory');
             @endforeach
 
+            @foreach($mediaCategories as $category)
+                @include('indexPageBlocks.mediaCategory');
+            @endforeach
+
+                @include('indexPageBlocks.infographicsNews');
 			@endsection

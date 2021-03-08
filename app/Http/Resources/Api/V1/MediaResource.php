@@ -16,8 +16,8 @@ class MediaResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'size_id' => $this->size_id,
-            'link_count_id' => $this->link_count_id,
+            'size_id' => (int)$this->size_id,
+            'link_count_id' => (int)$this->link_count_id,
             'link_name1' => $this->link_name1,
             'link1' => $this->link1,
             'link_name2' => is_null($this->link_name2)?'':$this->link_name2,

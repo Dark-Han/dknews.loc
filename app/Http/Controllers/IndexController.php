@@ -16,6 +16,7 @@ class IndexController extends Controller
         $specificCategories = $indexPageRepository->getSpecificCategoriesWithNews();
         $mediaCategories = $indexPageRepository->getMediaCategoriesWithNews();
         $infographicsNews=$indexPageRepository->getInfographicsNews();
+        $mediaPartners=$indexPageRepository->getMediaPartners();
 
         return view('index',compact(
             'topNews'
@@ -24,6 +25,7 @@ class IndexController extends Controller
                 , 'specificCategories'
                 , 'mediaCategories'
                 ,'infographicsNews'
+                ,'mediaPartners'
             )
         );
     }

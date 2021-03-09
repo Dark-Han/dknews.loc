@@ -78,5 +78,7 @@
                 @include('indexPageBlocks.mediaCategory');
             @endforeach
 
-                @include('indexPageBlocks.infographicsNews');
+            @include('indexPageBlocks.infographicsNews');
+
+            @include('indexPageBlocks.mediaPartners');
 			@endsection

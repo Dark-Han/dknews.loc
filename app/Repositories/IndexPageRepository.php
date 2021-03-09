@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\DTO\CategoriesWithNewsParams;
 use App\Models\Category;
+use App\Models\Media;
 use App\Services\CategoryColumnGenerater;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -163,6 +164,14 @@ class IndexPageRepository
         return $category;
     }
 
+    /**
+     * @return Media[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getMediaPartners(){
+        $mediaPartners=Media::all()->groupBy('size_id');
+//        dd($mediaPartners);
+        return $mediaPartners;
+    }
     /**
      *
      */

@@ -6,7 +6,8 @@ return [
     'Все последние новости'=>'All latest news',
     'Главная'=>'The main',
     'Популярное в рубрике'=>'Popular in the rubric',
-    'Показать ещё'=>'Show more'
+    'Показать ещё'=>'Show more',
+    'Архив газеты'=>'Newspaper archive'
 ];
 
 ?>

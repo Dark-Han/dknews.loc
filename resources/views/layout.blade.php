@@ -325,7 +325,7 @@
 									<li><a href="topics.php?id_cat=27">Читайте в номере</a></li>
 									<li><a onclick="window.open('{{asset($lastNewsPaper->newspaper)}}')"
 									       style="color: white;cursor: pointer;">Свежий выпуск ДК</a></li>
-									<li><a href="archive.php"> Архив газеты</a></li>
+									<li><a href="/{{$locale}}/newspapers-archive">Архив газеты</a></li>
 								</ul>
 							</div>
 						</div>

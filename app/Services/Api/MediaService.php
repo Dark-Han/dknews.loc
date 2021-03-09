@@ -36,10 +36,10 @@ class MediaService{
             'link_count_id'=>$data['link_count_id'],
             'link_name1'=>$data['link_name1'],
             'link1'=>$data['link1'],
-            'link_name2'=>$data['link_name2'],
-            'link2'=>$data['link2'],
-            'link_name3'=>$data['link_name3'],
-            'link3'=>$data['link3'],
+            'link_name2' => $data['link_count_id'] > 1 ? $data['link_name2'] : '',
+            'link2' => $data['link_count_id'] > 1 ? $data['link2'] : '',
+            'link_name3' => $data['link_count_id'] > 2 ? $data['link_name3'] : '',
+            'link3' => $data['link_count_id'] > 2 ? $data['link3'] : '',
             'cover'=>$this->imageHandler->put('/medias/',$data['cover'])
         ]);
         return $media;
@@ -61,11 +61,10 @@ class MediaService{
         $media->link_count_id=$data['link_count_id'];
         $media->link_name1=$data['link_name1'];
         $media->link1=$data['link1'];
-        $media->link_name2=$data['link_name2'];
-        $media->link2=$data['link2'];
-        $media->link_name3=$data['link_name3'];
-        $media->link3=$data['link3'];
-        $media->link3=$data['link3'];
+        $media->link_name2 = $data['link_count_id'] > 1 ? $data['link_name2'] : '';
+        $media->link2 = $data['link_count_id'] > 1 ? $data['link2'] : '';
+        $media->link_name3 = $data['link_count_id'] > 2 ? $data['link_name3'] : '';
+        $media->link3 = $data['link_count_id'] > 2 ? $data['link3'] : '';
         $media->cover=$data['cover'];
         $media->save();
 

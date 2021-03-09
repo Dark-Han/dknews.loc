@@ -323,7 +323,7 @@
 									<span class="caret"></span></button>
 								<ul class="dropdown-menu">
 									<li><a href="topics.php?id_cat=27">Читайте в номере</a></li>
-									<li><a onclick="window.open('{{asset($lastNewsPaper->newspaper)}}')"
+									<li><a onclick="window.open('/last-newspaper')"
 									       style="color: white;cursor: pointer;">Свежий выпуск ДК</a></li>
 									<li><a href="/{{$locale}}/newspapers-archive">Архив газеты</a></li>
 								</ul>

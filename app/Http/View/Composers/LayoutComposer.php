@@ -24,14 +24,12 @@ class LayoutComposer
         $languages = Language::orderBy('serial_number','ASC')->get();
         $firstBanner = BannerWeb::where('serial_number_id', 1)->first();
         $links = Link::with('linkTypes')->get();
-        $lastNewsPaper=Newspaper::orderBy('id','desc')->first();
         $categories=$this->categoryService->getHeaderCategories();
 
         $view->with('locale',App::getLocale());
         $view->with('languages', $languages);
         $view->with('firstBanner', $firstBanner);
         $view->with('links', $links);
-        $view->with('lastNewsPaper', $lastNewsPaper);
         $view->with('headerCategories', $categories);
     }
 }

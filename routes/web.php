@@ -11,6 +11,8 @@ Route::get('/admin/{any}', 'Admin\MainController@index')->where('any', '.*');
 
 //Фронт
 Route::middleware([Localization::class])->group(function () {
+    Route::get('/last-newspaper','NewspapersController@showLastNewspaper');
+
     Route::get('/{localization?}', 'IndexController@index');
     Route::get('/{localization}/newspapers-archive', 'NewspapersController@index');
     Route::get('/{localization}/{categorySlug}','CategoryController@index');

@@ -21,12 +21,7 @@
 				@endif
 			</div>
 			<div class="col-xl-6 col-sm-12">
-			    @foreach($silkAndRoadNews->news as $i=>$news)
-			    @php
-			        if($i<1){
-			            continue;
-			        }
-			    @endphp
+			    @foreach($silkAndRoadNews->news->skip(1) as $i=>$news)
 				<div class="thematic-news-sm">
 					<a href="{{"/$locale/$silkAndRoadNews->slug/$news->slug"}}">
 						<div class="thematic-news-sm-img">

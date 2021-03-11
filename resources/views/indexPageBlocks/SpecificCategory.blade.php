@@ -8,6 +8,7 @@
 	<div class="main-white-section wow fadeIn" style="visibility: visible;">
 		<div class="row">
 			<div class="col-xl-6 col-sm-12">
+			@if(!$category->news->isEmpty())
 				<div class="thematic-news-lg">
 					<a href='{{"/$locale/$category->slug/".$category->news[0]->slug}}'>
 						<img src="{{"/storage/".$category->news[0]->cover}}" class="img-fluid" alt="">
@@ -23,6 +24,7 @@
 						<h6>{{$category->news[0]->title}}</h6>
 					</a>
 				</div>
+		    @endif
 			</div>
 			@foreach($category->news->skip(1) as $news)
 			<div class="col-xl-6 col-sm-12">

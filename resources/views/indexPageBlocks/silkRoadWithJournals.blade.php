@@ -55,7 +55,7 @@
 								<p>@lang('list.ЕЖЕМЕСЯЧНЫЙ ЖУРНАЛ')</p>
 							</div>
 							<div class="thematic-down-pdf">
-								<a href="https://dknews.kz/journals.php?type=silk-road" target="_blank" class="link-j">@lang('list.АРХИВ ЖУРНАЛА')</a>
+								<a href="{{"/$locale/journals/silk-and-road"}}" target="_blank" class="link-j">@lang('list.АРХИВ ЖУРНАЛА')</a>
 							</div>
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 								<p>@lang('list.ЕЖЕМЕСЯЧНЫЙ ЖУРНАЛ')</p>
 							</div>
 							<div class="thematic-down-pdf">
-								<a href="https://dknews.kz/journals.php?type=belt-and-road" target="_blank" class="link-j">@lang('list.АРХИВ ЖУРНАЛА')</a>
+								<a href="{{"/$locale/journals/belt-and-road"}}" target="_blank" class="link-j">@lang('list.АРХИВ ЖУРНАЛА')</a>
 							</div>
 						</div>
 					</div>

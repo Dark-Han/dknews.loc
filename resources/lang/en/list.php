@@ -11,7 +11,8 @@ return [
     'Шёлковый путь'=>'Silk road',
     'СКАЧАТЬ PDF'=>'DOWNLOAD PDF',
     'ЕЖЕМЕСЯЧНЫЙ ЖУРНАЛ'=>'MONTHLY JOURNAL',
-    'АРХИВ ЖУРНАЛА'=>'JOURNAL ARCHIVE'
+    'АРХИВ ЖУРНАЛА'=>'JOURNAL ARCHIVE',
+    'Пояс и путь'=>'Belt and Road'
 ];
 
 ?>

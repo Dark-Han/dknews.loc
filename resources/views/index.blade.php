@@ -74,6 +74,8 @@
                 @include('indexPageBlocks.specificCategory');
             @endforeach
 
+            @include('indexPageBlocks.silkRoadWithJournals');
+            
             @foreach($mediaCategories as $category)
                 @include('indexPageBlocks.mediaCategory');
             @endforeach
@@ -81,4 +83,5 @@
             @include('indexPageBlocks.infographicsNews');
 
             @include('indexPageBlocks.mediaPartners');
+
 			@endsection

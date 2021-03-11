@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\DTO\CategoriesWithNewsParams;
+use App\DTO\CategoriesWithNewsParamsDTO;
 use App\Models\Category;
 use App\Models\Media;
 use App\Services\CategoryColumnGenerater;
@@ -86,7 +86,7 @@ class IndexPageRepository
      */
     public function getTopCategoriesWithNews()
     {
-        $params=new CategoriesWithNewsParams([],8,4);
+        $params=new CategoriesWithNewsParamsDTO([],8,4);
         $categories = $this->getCategoriesWithNewsFromParams($params);
         return $categories;
     }
@@ -96,7 +96,7 @@ class IndexPageRepository
      */
     public function getSpecificCategoriesWithNews()
     {
-        $params=new CategoriesWithNewsParams([1,3],false,5);
+        $params=new CategoriesWithNewsParamsDTO([1,3],false,5);
         $categories = $this->getCategoriesWithNewsFromParams($params);
         return $categories;
     }
@@ -106,7 +106,7 @@ class IndexPageRepository
      */
     public function getMediaCategoriesWithNews()
     {
-        $params=new CategoriesWithNewsParams([1,2,3],false,3);
+        $params=new CategoriesWithNewsParamsDTO([1,2,3],false,3);
         $categories = $this->getCategoriesWithNewsFromParams($params);
         return $categories;
     }
@@ -116,37 +116,50 @@ class IndexPageRepository
      */
     public function getInfographicsNews()
     {
-        $params=new CategoriesWithNewsParams([1],1,3);
+        $params=new CategoriesWithNewsParamsDTO([1],1,3);
         $categories = $this->getCategoriesWithNewsFromParams($params);
         return $categories;
     }
 
     /**
-     * @param CategoriesWithNewsParams $params
+     * @return mixed
+     */
+    public function getSilkRoadNews(){
+        $params=new CategoriesWithNewsParamsDTO([1],1,4);
+        $categories = $this->getCategoriesWithNewsFromParams($params);
+        return $categories;
+    }
+    /**
+     * @param CategoriesWithNewsParamsDTO $params
      * @return mixed
      */
     //Вынести в будущем в отдельный сервис
     /**
-     * @param CategoriesWithNewsParams $params
+     * @param CategoriesWithNewsParamsDTO $params
      * @return mixed
      */
-    public function getCategoriesWithNewsFromParams(CategoriesWithNewsParams $params)
+    public function getCategoriesWithNewsFromParams(CategoriesWithNewsParamsDTO $params)
     {
         $categories = $this->categoriesWithNewsCollection;
+        $categoriesIds=$params->getCategoriesIds();
+        $categoriesLimit=$params->getCategoriesLimit();
+        $newsLimit=$params->getNewsLimit();
 
-        if (!empty($params->getCategoriesIds())) {
-            $categories = $categories->whereIn('id', $params->getCategoriesIds());
+        if (!empty($categoriesIds)) {
+            $categories = $categories->whereIn('id', $categoriesIds);
         }
-        if ($params->getCategoriesLimit()) {
-            $categories = $categories->take($params->getCategoriesLimit());
+        if ($categoriesLimit) {
+            $categories = $categories->take($categoriesLimit);
         }
-        if ($params->getNewsLimit()) {
-            $limit = $params->getNewsLimit();
-            $categories = $categories->map(function ($category, $i) use ($limit) {
-                return $this->getLimitedNewsOf($category, $limit);
+        if ($newsLimit) {
+            $categories = $categories->map(function ($category, $i) use ($newsLimit) {
+                return $this->getLimitedNewsOf($category, $newsLimit);
             });
         }
 
+        if($categoriesLimit===1){
+            return $categories->first();
+        }
         return $categories;
     }
 

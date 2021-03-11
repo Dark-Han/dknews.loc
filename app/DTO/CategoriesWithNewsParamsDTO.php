@@ -3,10 +3,10 @@
 namespace App\DTO;
 
 /**
- * Class CategoriesWithNewsParams
+ * Class CategoriesWithNewsParamsDTO
  * @package App\DTO
  */
-class CategoriesWithNewsParams {
+class CategoriesWithNewsParamsDTO {
 
     /**
      * @var array
@@ -25,7 +25,7 @@ class CategoriesWithNewsParams {
 
 
     /**
-     * CategoriesWithNewsParams constructor.
+     * CategoriesWithNewsParamsDTO constructor.
      * @param array $categoriesIds
      * @param $categoriesLimit
      * @param $newsLimit

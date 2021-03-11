@@ -15,6 +15,7 @@ Route::middleware([Localization::class])->group(function () {
 
     Route::get('/{localization?}', 'IndexController@index');
     Route::get('/{localization}/newspapers-archive', 'NewspapersController@index');
+    Route::get('/{localization}/journals/{type}','JournalsController@index');
     Route::get('/{localization}/{categorySlug}','CategoryController@index');
     Route::get('/{localization}/{categorySlug}/{newsSlug}', 'NewsController@index');
 });
